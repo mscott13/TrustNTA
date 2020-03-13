@@ -1,0 +1,37 @@
+ - Main page with two large grids, one for job seeker and one for employer
+ - graduate, jobseeker
+
+Job seeker
+-----------
+
+Login Heart trust NTA job placement portal
+
+for jobseeker sign in with trn and password
+for employer sign in with username and password
+
+employer dashboard statisics
+- clickable count of Suitable Job Seekers
+- acknowledged Receipt count
+- count of Job Seekers interested in the Job
+
+employee dashboard menu
+- job management
+- suitable candidates (1 list) people who are interested
+- search graduates input on the top bar
+
+job management features
+- can create a new job post
+- can view statisitcs about job posts
+- can edit job post
+
+two pane view
+- Seekers that have Acknowledged Receipt of the Job Vacancy 
+- Seekers that are interested
+
+Dashboard contents
+ - at the top, show counters for acknowledged receipts, interested candidates and newly found seekers
+
+- dashboard title
+-sort by and location dropdown
+
+list of stude

@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Heart Trust NTA - Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-all.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top nav-overrides">
+        <a class="navbar-brand" href="#"><img src="~/Content/Images/company-logo-square2.png" width="50" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input style="width:290px;" class="form-control mr-sm-2" type="search" placeholder="Search a job..." aria-label="Search">
+                        <select style="width:120px" class="custom-select" id="inputGroupSelect01">
+                            <option selected>Company</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <select style="width:120px; margin-left:3px;" class="custom-select" id="inputGroupSelect01">
+                            <option selected>Job Type</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <select style="width:120px; margin-left:3px;" class="custom-select" id="inputGroupSelect01">
+                            <option selected>Location</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <button style="margin-left:10px; border: 1px solid #838383;" type="button" class="btn btn-light">Search</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="false"> My Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="false"> Jobs Created</a>
+                </li>
+                <li class="nav-item">
+                    <button style="margin-left:10px;" type="button" class="btn btn-success"><i style="margin-right: 5px; color: white;" class="fas fa-file-alt"></i> New Job Post</button>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+                <li style="cursor:pointer;" class="nav-item active">Mark A. Scott <span><img src="~/Content/Images/supervised_user_circle.svg" width="30" /></span></li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="welcome">
+        <h4 class="welcome-title">Heart Trust/NTA Job Portal</h4>
+        <p class="welcome-message">Duis id arcu faucibus, fermentum purus sit amet, gravida velit. </p>
+    </div>
+    <div style="margin-top: 15px;" class="container">
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_TrustNTA_Seeker_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm col-padding-lr-adjust">
+        <div class="dashboard-statistic ds-jinterested-hover">
+            <img class="stats-icon" src="~/Content/Images/job_interested.png" width="50" height="50" />
+            <h4 class="stats-title">Jobs Interested</h4>
+            <h5 class="stats-counter stats-counter-interested">02</h5>
+        </div>
+    </div>
+    <div class="col-sm col-padding-lr-adjust">
+        <div class="dashboard-statistic ds-offers-hover">
+            <img class="stats-icon" src="~/Content/Images/job_offers.png" width="50" height="50" />
+            <h4 class="stats-title">Job Offers</h4>
+            <h5 class="stats-counter stats-counter-offers">04</h5>
+        </div>
+    </div>
+    <div class="col-sm col-padding-lr-adjust">
+        <div class="dashboard-statistic ds-cjobs-hover">
+            <img class="stats-icon" src="~/Content/Images/jobs_created.png" width="50" height="50" />
+            <h4 class="stats-title">Created Jobs</h4>
+            <h5 class="stats-counter stats-counter-created">15</h5>
+        </div>
+    </div>
+    <div class="col-sm col-padding-lr-adjust">
+        <div class="dashboard-statistic ds-estatus-hover">
+            <img class="stats-icon" src="~/Content/Images/employment_status.png" width="50" height="50" />
+            <h4 class="stats-title">Employment Status</h4>
+            <h5 class="stats-counter stats-counter-employ-status">U</h5>
+        </div>
+    </div>
+</div>
+<div class="all-job-posts">
+    <div class="jpost-main">
+        <h4 class="job-tab-title">All Job Postings</h4>
+        <div class="filters">
+            <div class="filter-object">
+                <p class="filter-title">Location: <span class="badge badge-light badge-sz-adjust">Anywhere</span></p>
+            </div>
+            <i style="font-size: 6px; color: #EA9E8D;" class="fas fa-circle"></i>
+            <div class="filter-object">
+                <p class="filter-title">Company: <span class="badge badge-light badge-sz-adjust">Any Company</span></p>
+            </div>
+            <i style="font-size: 6px; color: #C2AFF0;" class="fas fa-circle"></i>
+            <div class="filter-object">
+                <p class="filter-title">Job Type: <span class="badge badge-light badge-sz-adjust">Any Type</span></p>
+            </div>
+            <i style="font-size: 6px; color: #FFBB5F;" class="fas fa-circle"></i>
+            <div class="filter-object">
+                <p class="filter-title">Job Title: <span class="badge badge-light badge-sz-adjust">""</span></p>
+            </div>
+            <i style="font-size: 6px; color: #03CEA4;" class="fas fa-circle"></i>
+            <div class="filter-object">
+                <p class="filter-title">Start Date: <span class="badge badge-light badge-sz-adjust">Any</span></p>
+            </div>
+            <i style="font-size: 6px; color: #EC4E20;" class="fas fa-circle"></i>
+            <div class="filter-object">
+                <p class="filter-title">End Date: <span class="badge badge-light badge-sz-adjust">Any</span></p>
+            </div>
+            <i style="font-size: 6px; color: #230903;" class="fas fa-circle"></i>
+            <div class="filter-object">
+                <p class="filter-title">Vacancy Status: <span class="badge badge-light badge-sz-adjust">Any</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="jpost-filter">
+        <div class="filter-bg">
+            <i class="fas fa-sliders-h"></i>
+        </div>
+    </div>
+</div>
+<hr style="width:100%; margin-top: 2px; margin-bottom:2px;" />
+<div class="jobs-container">
+    <div class="row row-vspace">
+        <div class="col-sm col-padding-lr-adjust">
+            <div class="job">
+                <div class="company-img">
+                    <img alt="Company Logo" src="" />
+                </div>
+                <div class="company-title">
+                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
+                    <h5 class="job-title">UX Lead and Researcher - <span class="job-type">Designer</span></h5>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span> Kingston, St.Ann, Trelawny</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> 03/11/2020 to 04/15/2020</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">Open</span></span>
+                </div>
+                <div class="decision">
+                    <div class="decision-container">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="option1" checked> Seeking
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option2"> Not Interested
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm col-padding-lr-adjust">
+            <div class="job">
+                <div class="company-img">
+                    <img alt="Company Logo" src="" />
+                </div>
+                <div class="company-title">
+                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
+                    <h5 class="job-title">UX Lead and Researcher - <span class="job-type">Designer</span></h5>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span> Kingston, St.Ann, Trelawny</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> 03/11/2020 to 04/15/2020</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">Open</span></span>
+                </div>
+                <div class="decision">
+                    <div class="decision-container">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="option1" checked> I am Interested
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option2"> Not Interested
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm col-padding-lr-adjust">
+            <div class="job">
+                <div class="company-img">
+                    <img alt="Company Logo" src="" />
+                </div>
+                <div class="company-title">
+                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
+                    <h5 class="job-title">UX Lead and Researcher - <span class="job-type">Designer</span></h5>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span> Kingston, St.Ann, Trelawny</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> 03/11/2020 to 04/15/2020</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">Open</span></span>
+                </div>
+                <div class="decision">
+                    <div class="decision-container">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="option1" checked> I am Interested
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option2"> Not Interested
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm col-padding-lr-adjust">
+            <div class="job">
+                <div class="company-img">
+                    <img alt="Company Logo" src="" />
+                </div>
+                <div class="company-title">
+                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
+                    <h5 class="job-title">UX Lead and Researcher - <span class="job-type">Designer</span></h5>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span> Kingston, St.Ann, Trelawny</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> 03/11/2020 to 04/15/2020</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">Open</span></span>
+                </div>
+                <div class="decision">
+                    <div class="decision-container">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="option1" checked> I am Interested
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option2"> Not Interested
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="load-more-container">
+    <button type="button" class="btn btn-light  btn-sm btn-load-more"><i style="margin-right:3px" class="fas fa-angle-down"></i>Load more</button>
+    <button type="button" class="btn btn-outline-dark  btn-sm btn-all-results"><i style="margin-right:3px" class="fas fa-angle-double-down"></i>Get all results</button>
+    <p class="results-info">5 results remaining...</p>
+</div>
+
+<h4 class="job-tab-title">Job Postings Specific For You</h4>
+<p class="job-tab-title-sub">Jobs listed here are tailored based on your qualifications</p>
+<hr style="width:100%; margin-top: 2px; margin-bottom:2px;" />
+
+<div class="jobs-container">
+    <div class="row row-vspace">
+        <div class="col-sm col-padding-lr-adjust">
+            <div class="job">
+                <div class="company-img">
+                    <img alt="Company Logo" src="" />
+                </div>
+                <div class="company-title">
+                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
+                    <h5 class="job-title">UX Lead and Researcher - <span class="job-type">Designer</span></h5>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span> Kingston, St.Ann, Trelawny</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> 03/11/2020 to 04/15/2020</span>
+                </div>
+                <div class="job-details">
+                    <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">Open</span></span>
+                </div>
+                <div class="decision">
+                    <div class="decision-container">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="option1" checked> Seeking
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option2"> Not Interested
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm col-padding-lr-adjust">
+
+        </div>
+        <div class="col-sm col-padding-lr-adjust">
+
+        </div>
+        <div class="col-sm col-padding-lr-adjust">
+
+        </div>
+    </div>
+</div>
+
+

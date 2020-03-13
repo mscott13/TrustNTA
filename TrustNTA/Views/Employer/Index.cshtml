@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_TrustNTA_Employer_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/employer.js"></script>
+}
+
+<div class="employer-header-wrapper">
+    <div class="header-left">
+        <h4 class="employer-main-title">Your Dashboard</h4>
+        <p class="employer-main-subtitle">Graduates listing</p>
+    </div>
+    <div class="header-right">
+        <button type="button" class="btn btn-success btn-create-jpost"><i style="margin-right: 5px; color: #fff;" class="fas fa-building"></i>Create a new job post</button>
+    </div>
+</div>
+
+<hr style="margin-top:5px; margin-bottom:25px;"/>
+<table id="graduates-listing" class="display">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Qualifications</th>
+            <th>Job Type(s)</th>
+            <th>Available Location(s)</th>
+            <th>Job Status</th>
+            <th>Resume</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Adrian</td>
+            <td>Bennette</td>
+            <td>Test Qualifications, 1, 2</td>
+            <td>Plumbing, Barber, Electrician</td>
+            <td>St.Ann, Trelawny</td>
+            <td>Unemployed (Seeking)</td>
+            <td>Unavailable</td>
+        </tr>
+    </tbody>
+</table>

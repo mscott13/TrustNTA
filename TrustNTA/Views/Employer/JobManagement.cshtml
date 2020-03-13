@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<TrustNTA.Models.EmployerVacancy>
+
+@{
+    ViewBag.Title = "JobManagement";
+    Layout = "~/Views/Shared/_TrustNTA_Employer_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/employer.js"></script>
+}
+
+<div class="employer-header-wrapper">
+    <div class="header-left">
+        <h4 class="employer-main-title">Job Management</h4>
+        <p class="employer-main-subtitle">Create, edit and view job posts</p>
+    </div>
+    <div class="header-right">
+        <button type="button" class="btn btn-success btn-create-jpost"><i style="margin-right: 5px; color: #fff;" class="fas fa-building"></i>Create a new job post</button>
+    </div>
+</div>
+
+<hr style="margin-top:5px; margin-bottom:25px;" />
+<div class="job-statistics">
+    <h4 style="color:#d8d8d8;">JOB STATISTICS HERE</h4>
+</div>
+<h5 class="employer-main-secondarytitle">List of Job Vacancies</h5>
+<table id="vacancy-listing" class="display">
+    <thead>
+        <tr>
+            <td>Job Title</td>
+            <td>Job Type</td>
+            <td>Locations</td>
+            <td>Start Date</td>
+            <td>End Date</td>
+            <td>Status</td>
+            <td>Interested Clients</td>
+            <td>Edit</td>
+            <td>Remove</td>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (TrustNTA.Models.EmployerVacancy vacancy in Model)
+        {
+            <tr>
+                <td>@vacancy.jobTitle</td>
+                <td>@vacancy.jobType</td>
+                <td>@vacancy.GetFormattedLocations()</td>
+                <td>@vacancy.startDate.ToString("dd MMMM, yyyy")</td>
+                <td>@vacancy.endDate.ToString("dd MMMM, yyyy")</td>
+                <td class="vacancy-status">
+                    @if (vacancy.vacancyStatus == "Filled")
+                    {
+                        <i style="color: orange;" class="fas fa-circle"></i>@vacancy.vacancyStatus
+                    }
+                    else if (vacancy.vacancyStatus == "Open")
+                    {
+                        <i style="color: green;" class="fas fa-circle"></i>@vacancy.vacancyStatus
+                    }
+                    else if (vacancy.vacancyStatus == "Closed")
+                    {
+                        <i style="color:red;" class="fas fa-circle"></i>@vacancy.vacancyStatus
+                    }
+                    else
+                    {
+                        <i class="fas fa-circle"></i>@vacancy.vacancyStatus
+                    }
+                </td>
+                <td>--</td>
+                <td class="vacancy-edit"><i class="fas fa-edit"></i></td>
+                <td class="vacancy-remove"><i class="fas fa-trash-alt"></i></td>
+            </tr>
+        }
+    </tbody>
+</table>

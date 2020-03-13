@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Heart Trust NTA - Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-all.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+    <link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/datatable-customize.css"/>
+</head>
+<body>
+    <div class="employer-main">
+        <div class="employer-sidebar">
+            <div class="internal-sidebar-wrapper">
+                <header class="sidebar-header"><span><img width="60" height="60" src="~/Content/Images/company-logo-square2.png" /></span><h4>Job Portal</h4></header>
+                <hr style="margin-bottom:15px;" class="sidebar-separator" />
+
+                <p style="margin-bottom: 15px" class="sidebar-subheader">Main</p>
+                <ul>
+                    <li><i class="fas fa-chart-line"></i>Dashboard</li>
+                    <li><i class="fas fa-briefcase"></i>Job Management</li>
+                    <li><i class="fas fa-user-tie"></i>Suitable Candidates</li>
+                </ul>
+
+                <p style="margin-bottom: 15px" class="sidebar-subheader">Other</p>
+                <ul>
+                    <li><i class="fas fa-file-alt"></i> New Seekers<span style="margin-left:10px;" class="badge badge-danger">1</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="employer-content">
+            <nav class="employer-top-nav">
+                <div class="custom-input-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="graduates-search-input" placeholder="Search Graduates..." spellcheck="false" autofocus/>
+                </div>
+
+                <ul class="employer-top-nav-links">
+                    <li style="cursor:pointer;" class="nav-item active">Mark A. Scott <span><img src="/Content/Images/supervised_user_circle.svg" width="30"></span></li>
+                </ul>
+            </nav>
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery.marcopolo.min.js"></script>
+    @RenderSection("scripts", false)
+</body>
+</html>
