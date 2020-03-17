@@ -16,5 +16,8 @@ namespace TrustNTA.Models
         public string email { get; set; }
         public bool isGraduate { get; set; }
         public bool isVerified { get; set; }
+        public string identifier { get; set; }
+        public DateTime lastAccessed { get; set; }
+        public string password { get; set; }
     }
 }

@@ -1,6 +1,30 @@
 ﻿
 @{
     Layout = null;
+    string seekerActive, employerActive;
+    if (ViewData["utype"] != null)
+    {
+        if (ViewData["utype"].ToString() == "seeker")
+        {
+            seekerActive = "active";
+            employerActive = "";
+        }
+        else if (ViewData["utype"].ToString() == "employer")
+        {
+            seekerActive = "";
+            employerActive = "active";
+        }
+        else
+        {
+            seekerActive = "active";
+            employerActive = "";
+        }
+    }
+    else
+    {
+        seekerActive = "active";
+        employerActive = "";
+    }
 }
 
 <!DOCTYPE html>
@@ -31,45 +55,47 @@
             <div class="lg-container-right">
                 <h4 class="login-main-title">HEART Trust/NTA Job Portal</h4>
                 <p class="login-main-promt">Sign in to continue</p>
-              
+
                 <ul style="font-size: 13px;" class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Graduate</a>
+                        <a class="nav-link @seekerActive" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Graduate</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Employer</a>
+                        <a class="nav-link @employerActive" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Employer</a>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane @seekerActive" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <label class="login-label">Graduate Identifier</label>
-                        <input class="custom-input" type="text" placeholder="Graduate Identifier" />
+                        <input class="custom-input" type="text" id="graduate-identifier" placeholder="Graduate Identifier" />
                         <label class="login-label">Password</label>
-                        <input class="custom-input" type="password" placeholder="Password" />
+                        <input class="custom-input" id="graduate-password" type="password" placeholder="Password" />
 
                         <a href="#" class="reset-pw">Reset your password</a>
-                        <button type="button" class="btn btn-light btn-block sign-in">LOGIN</button>
+                        <button id="btn-graduate-signin" type="button" class="btn btn-light btn-block sign-in">LOGIN</button>
 
-                        <a href="#" class="account-activate">Not registered? click here to activate your account...</a>
+                        <a href="/account/register?utype=seeker" class="account-activate">Not registered? click here to activate your account...</a>
                     </div>
-                    <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane @employerActive" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <label class="login-label">Employer ID</label>
-                        <input class="custom-input" type="text" placeholder="Employer ID" />
+                        <input id="employer-username" class="custom-input" type="text" placeholder="Employer ID" />
                         <label class="login-label">Password</label>
-                        <input class="custom-input" type="password" placeholder="Password" />
+                        <input id="employer-password" class="custom-input" type="password" placeholder="Password" />
 
                         <a href="#" class="reset-pw">Reset your password</a>
-                        <button type="button" class="btn btn-light btn-block sign-in">LOGIN</button>
+                        <button id="btn-employer-login" type="button" class="btn btn-light btn-block sign-in">LOGIN</button>
 
-                        <a href="#" class="account-activate">Not registered? click here to create a new account</a>
+                        <a href="/account/register?utype=employer" class="account-activate">Not registered? click here to create a new account</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+
     <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/account.js"></script>
 </body>
 </html>

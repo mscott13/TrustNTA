@@ -22,13 +22,6 @@ html {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
 .top-menu {
     width: 100%;
     height: 50px;
@@ -444,14 +437,23 @@ textarea {
     padding-left: 0;
 }
 
+    .employer-sidebar ul li a {
+        color: #c0c0c0;
+        font-size: 17px;
+        text-decoration: none;
+        width: 100%;
+        height: 100%;
+        display: block;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
     .employer-sidebar ul li {
         color: #c0c0c0;
         font-size: 17px;
         line-height: 45px;
         border-top: 1.4px solid rgba(255,255,255, 0.1);
         border-bottom: 1px solid rgba(0,0,0, 0.4);
-        padding-left: 10px;
-        padding-right: 10px;
+       
         transition: all 0.2s;
         cursor: pointer;
     }
@@ -527,6 +529,7 @@ textarea {
     flex: 0;
     font-size: 24px;
     color: #aeaeae;
+    margin-right: 5px;
 }
 
 .employer-top-nav-links
@@ -600,31 +603,30 @@ textarea {
     margin-top: 25px;
 }
 
-.vacancy-edit i {
-    color: #909090;
-    transition: all 0.2s;
-    cursor:pointer;
-}
-.vacancy-remove i {
-    transition: all 0.2s;
-    color: #909090;
-    cursor:pointer;
-}
-.vacancy-edit i:hover {
+    #vacancy-listing tbody tr td:nth-child(8) i {
+        color: #909090;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+    #vacancy-listing tbody tr td:nth-child(9) i {
+        transition: all 0.2s;
+        color: #909090;
+        cursor: pointer;
+    }
+#vacancy-listing tbody tr td:nth-child(8) i:hover {
     color: #5386E4;
 }
-.vacancy-remove i:hover {
+#vacancy-listing tbody tr td:nth-child(9) i:hover {
     color: #E71D36;
 }
 
-.vacancy-status {
+#vacancy-listing tbody tr td:nth-child(6) {
     display: flex;
     justify-content: left;
     align-items: center;
 }
 
-.vacancy-status i
-{
-    margin-right: 5px;
-    font-size:7px;
-}
+    #vacancy-listing tbody tr td:nth-child(6) i {
+        margin-right: 5px;
+        font-size: 7px;
+    }

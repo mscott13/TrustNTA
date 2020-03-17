@@ -7,8 +7,9 @@ namespace TrustNTA.Models
 {
     public class Company
     {
-        public int companyId { get; set; }
+        public string companyId { get; set; }
         public string companyName { get; set; }
+        public string address { get; set; }
         public DateTime createdDate { get; set; }
     }
 }
