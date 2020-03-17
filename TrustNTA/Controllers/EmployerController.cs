@@ -92,5 +92,22 @@ namespace TrustNTA.Controllers
                 return Json(new { msg = "provide a jobId"}, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        [ActionName("update-vacancy")]
+        public ActionResult UpdateVacancy(EmployerVacancy vacancy) 
+        {
+            Database.UpdateJobVacancy(vacancy);
+            Response.StatusCode = 200;
+            return Json(new {status = "job_updated", vacancy}, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [ActionName("delete-vacancy")]
+        public ActionResult DeleteVacancy(string jobId) 
+        {
+            Database.DeleteJobVacancy(jobId);
+            return Json(new { status = "job_deleted" }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

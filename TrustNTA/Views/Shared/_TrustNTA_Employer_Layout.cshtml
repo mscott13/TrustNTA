@@ -61,7 +61,7 @@
             cache: false,
             required: false,
             formatItem: function (data, $item) {
-                return data.data + "\n" + "- test";
+                return data.data;
             },
             onSelect: function (data, $item) {
                 $("#graduates-search-input").val(data.data);

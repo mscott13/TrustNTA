@@ -603,6 +603,7 @@ html {
     margin-top: 25px;
 }
 
+
     #vacancy-listing tbody tr td:nth-child(8) i {
         color: #909090;
         transition: all 0.2s;
@@ -621,9 +622,7 @@ html {
 }
 
 #vacancy-listing tbody tr td:nth-child(6) {
-    display: flex;
-    justify-content: left;
-    align-items: center;
+  
 }
 
     #vacancy-listing tbody tr td:nth-child(6) i {

@@ -940,19 +940,22 @@ namespace TrustNTA.Data_Access
 
         public static void StoreJobLocations(List<JobLocation> jobLocations, string jobId)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            if (jobLocations != null) 
             {
-                connection.Open();
-                string cmd = "Insert into Job_LocationAvailability (jobId, locationId, date) values (@jobId, @locationId, @date)";
-
-                foreach (JobLocation jobLocation in jobLocations)
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand command = new SqlCommand(cmd, connection))
+                    connection.Open();
+                    string cmd = "Insert into Job_LocationAvailability (jobId, locationId, date) values (@jobId, @locationId, @date)";
+
+                    foreach (JobLocation jobLocation in jobLocations)
                     {
-                        command.Parameters.AddWithValue("@jobId", jobId);
-                        command.Parameters.AddWithValue("@locationId", jobLocation.locationId);
-                        command.Parameters.AddWithValue("@date", DateTime.Now);
-                        command.ExecuteNonQuery();
+                        using (SqlCommand command = new SqlCommand(cmd, connection))
+                        {
+                            command.Parameters.AddWithValue("@jobId", jobId);
+                            command.Parameters.AddWithValue("@locationId", jobLocation.locationId);
+                            command.Parameters.AddWithValue("@date", DateTime.Now);
+                            command.ExecuteNonQuery();
+                        }
                     }
                 }
             }
@@ -964,16 +967,49 @@ namespace TrustNTA.Data_Access
             using (SqlConnection connection = new SqlConnection(connectionString)) 
             {
                 connection.Open();
-                string cmd = "Update Job_LocationAvailability set locationId=@locationid, date=getdate() where jobId=@jobId";
+                string cmd = "Delete from Job_LocationAvailability where jobId=@jobId";
 
-                foreach (JobLocation jobLocation in jobLocations) 
+                using (SqlCommand command = new SqlCommand(cmd, connection))
                 {
-                    using (SqlCommand command = new SqlCommand(cmd, connection))
-                    {
-                        command.Parameters.AddWithValue("@jobId", jobId);
-                        command.Parameters.AddWithValue("@locationId", jobLocation.locationId);
-                        command.ExecuteNonQuery();
-                    }
+                    command.Parameters.AddWithValue("@jobId", jobId);
+                    command.ExecuteNonQuery();
+                }
+                StoreJobLocations(jobLocations, jobId);
+            }
+        }
+
+        public static EmployerVacancy UpdateJobVacancy(EmployerVacancy vacancy) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "Update Employer_JobCreated set jobType=@jobType, jobTitle=@jobTitle, endDate=@endDate, vacancyStatus=@vacancyStatus where employerJobId=@jobId";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    command.Parameters.AddWithValue("@jobId", vacancy.employerVacancyId);
+                    command.Parameters.AddWithValue("@jobType", vacancy.jobType);
+                    command.Parameters.AddWithValue("@jobTitle", vacancy.jobTitle);
+                    command.Parameters.AddWithValue("@endDate", vacancy.endDate);
+                    command.Parameters.AddWithValue("@vacancyStatus", vacancy.vacancyStatus);
+                    command.ExecuteNonQuery();
+                    UpdateJobLocations(vacancy.locations, vacancy.employerVacancyId);
+                    return vacancy;
+                }
+            }
+        }
+
+        public static void DeleteJobVacancy(string jobId) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "Delete from Seeker_JobInterested where employerJobId=@jobId; Delete from Employer_JobCreated where employerJobId=@jobId; Delete from Job_LocationAvailability where jobId=@jobId";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    command.Parameters.AddWithValue("@jobId", jobId);
+                    command.ExecuteNonQuery();
                 }
             }
         }

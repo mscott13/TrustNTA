@@ -29,7 +29,7 @@ namespace TrustNTA.Models
             get { return _startDate; }
             set 
             {
-                html_startDate = value.ToString("dddd, dd MMMM yyyy");
+                html_startDate = value.ToString("dd MMMM, yyyy");
                 _startDate = value;
             }
         }
@@ -39,7 +39,7 @@ namespace TrustNTA.Models
             get { return _endDate; }
             set
             {
-                html_endDate = value.ToString("dddd, dd MMMM yyyy");
+                html_endDate = value.ToString("dd MMMM, yyyy");
                 _endDate = value;
             }
         }
@@ -83,7 +83,7 @@ namespace TrustNTA.Models
             get { return _dateCreated; }
             set
             {
-                html_dateCreated = value.ToString("dddd, dd MMMM yyyy");
+                html_dateCreated = value.ToString("dd MMMM, yyyy");
                 _dateCreated = value;
             }
         }

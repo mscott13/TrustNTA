@@ -1,10 +1,21 @@
 ﻿$(document).ready(function () {
+    var editObj;
     var graduatesTable = $("#graduates-listing").DataTable({
         "pageLength": 50
     });
 
     var vacancyTable = $("#vacancy-listing").DataTable({
-        "pageLength": 50
+        "pageLength": 50,
+        "columns": [
+            null,
+            null,
+            { "width": "23%" },
+            null,
+            null,
+            { "width": "11%" },
+            null,
+            null
+        ]
     });
 
     $("#btn-create-jpost").click(function () {
@@ -35,51 +46,110 @@
             jobLocations.push(location);
         });
 
-        if (jobType !== "0")
-        {
-            var json = JSON.stringify({ "jobType": jobType, "jobTitle": jobPostName, "startDate": startDate, "endDate": endDate, "locations": jobLocations });
-            $.ajax({
-                url: "/employer/add-vacancy",
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: json,
-                success: function (result) {
-                    if (result.status === "vacancy_created") {
-                        vacancyTable.row.add([
-                            result.vacancy.jobTitle,
-                            result.vacancy.html_jobType,
-                            result.vacancy.html_locations,
-                            result.vacancy.html_startDate,
-                            result.vacancy.html_endDate,
-                            result.vacancy.html_vacancyStatus,
-                            "--",
-                            "<i data-vid='" + result.vacancy.employerVacancyId + "' class='fas fa-edit btn-edit'></i>",
-                            "<i data-vid='" + result.vacancy.employerVacancyId + "' class='fas fa-trash-alt btn-delete'></i>"
-                        ]).draw(false);
-                        console.log(result);
+        if (_jobLocations.length > 0) {
+            if (jobType !== "0") {
+                var json = JSON.stringify({ "jobType": jobType, "jobTitle": jobPostName, "startDate": startDate, "endDate": endDate, "locations": jobLocations });
+                $.ajax({
+                    url: "/employer/add-vacancy",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: json,
+                    success: function (result) {
+                        if (result.status === "vacancy_created") {
+                            vacancyTable.row.add([
+                                result.vacancy.jobTitle,
+                                result.vacancy.html_jobType,
+                                result.vacancy.html_locations,
+                                result.vacancy.html_startDate,
+                                result.vacancy.html_endDate,
+                                result.vacancy.html_vacancyStatus,
+                                "--",
+                                "<i data-vid='" + result.vacancy.employerVacancyId + "' class='fas fa-edit btn-edit'></i>"
+                            ]).draw(false);
+                            console.log(result);
 
-                        alert("Job vacancy: " + result.vacancy.jobTitle + " has been created successfuly");
-                        $("#create-vacancy-modal").modal("hide");
-                        ClearJobCreateFields();
+                            alert("Job vacancy: " + result.vacancy.jobTitle + " has been created successfuly");
+                            $("#create-vacancy-modal").modal("hide");
+                            ClearJobCreateFields();
+                        }
+                    },
+                    error: function (result) {
+                        console.log(result);
                     }
-                },
-                error: function (result) {
-                    console.log(result);
-                }
-            });
+                });
+            }
+            else
+            {
+                alert("Choose a job type for this vacancy");
+            }
         }
+        else
+        {
+            alert("Select at least one location for this job vacancy");
+        } 
     });
 
     $("#btn-update-vacancy").click(function () {
-         
-         $("#update-job-selector option:selected").val();
-         $("#update-locations-selector option:selected");
-         
-         $("#update-end-date").val();
+        var jobId = $(editObj).attr("data-vid");
+        var tr = $(editObj).parent().parent();
+        var table = $("#vacancy-listing").DataTable();
+        var rowData = table.row(tr).data();
+
+        var jobTitle = $("#update-vacancy-job-post-name").val();
+        var jobType = $("#update-job-selector option:selected").val();
+        var vacancyStatus = $("#update-vacancy-status option:selected").val();
+        var _jobLocations = $("#update-locations-selector option:selected");
+        var startDate = $("#update-start-date").val();
+        var endDate = $("#update-end-date").val();
+
+        var jobLocations = [];
+        $(_jobLocations).each(function () {
+            var location = {};
+            location.locationId = $(this).val();
+            location.locationName = $(this).text();
+            jobLocations.push(location);
+        });
+
+        if (_jobLocations.length > 0) {
+            if (jobType !== "0" && vacancyStatus !== "") {
+                var json = JSON.stringify({ "employerVacancyId": jobId, "jobType": jobType, "jobTitle": jobTitle, "startDate": startDate, "endDate": endDate, "locations": jobLocations, "vacancyStatus": vacancyStatus });
+                $.ajax({
+                    url: "/employer/update-vacancy",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: json,
+                    success: function (result) {
+                        if (result.status === "job_updated") {
+                            console.log(result);
+                            rowData[0] = result.vacancy.jobTitle;
+                            rowData[1] = result.vacancy.html_jobType;
+                            rowData[2] = result.vacancy.html_locations;
+                            rowData[3] = result.vacancy.html_startDate;
+                            rowData[4] = result.vacancy.html_endDate;
+                            rowData[5] = result.vacancy.html_vacancyStatus;
+                            table.row(tr).data(rowData).invalidate();
+                            $("#edit-vacancy-modal").modal("hide");
+                        }
+                    },
+                    error: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+            else {
+                alert("Select a job type and the vacancyStatus");
+            }
+        }
+        else
+        {
+            alert("Select at least one location for this job vacancy");
+        }
+
+        
     });
 
     $("#btn-close-updatevacancy").click(function () {
-
+        $("#edit-vacancy-moda").modal("hide");
     });
 
     $("body").on("click", ".btn-delete", function () {
@@ -91,27 +161,21 @@
     });
 
     $("body").on("click", ".btn-edit", function () {
-        var jobId = $(this).attr("data-vid");
-        var tr = $(this).parent().parent();
+        editObj = $(this);
         var table = $("#vacancy-listing").DataTable();
-        var rowData = table.row(tr).data();
-
-        rowData[0] = "Job title";
-        rowData[0] = "Job Type";
-        rowData[0] = "Locations";
-        rowData[0] = "Start Date";
-        rowData[0] = "End Date";
-
-        table.row(tr).data(rowData).invalidate();
-        console.log(jobId);
-        RestoreVacancyOptions(jobId);
-        $("#edit-vacancy-modal").modal("show");
+        var rowData = table.row($(editObj).parent().parent()).data();
+       
+        if (rowData[5].indexOf("Closed") < 0 && rowData[5].indexOf("Filled") < 0)
+        {
+            RestoreVacancyOptions(editObj.attr("data-vid"));
+            $("#edit-vacancy-modal").modal("show");
+        }
     });
 
     function RestoreVacancyOptions(jobId)
     {
         $.ajax({
-            url: "/employer/restore-joblocs?jobId=" + jobId,
+            url: "/employer/restore-joblocs?jobId=" + encodeURIComponent(jobId),
             type: "GET",
             contentType: "application/json; charset=utf-8",
             data: {},
@@ -122,6 +186,7 @@
                     arrayValues.push(value.locationId);
                 });
 
+                $("#update-vacancy-status").val(result.vacancy.vacancyStatus);
                 $("#update-locations-selector").val(arrayValues);
                 $("#update-job-selector").val(result.jobType.jobId);
                 $("#update-vacancy-job-post-name").val(result.vacancy.jobTitle);
