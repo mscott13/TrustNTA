@@ -1,6 +1,7 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_TrustNTA_Employer_Layout.cshtml";
+    @model IEnumerable<TrustNTA.Models.Seeker>
 }
 
 @section scripts{
@@ -17,28 +18,46 @@
     </div>
 </div>
 
-<hr style="margin-top:5px; margin-bottom:25px;"/>
+<hr style="margin-top:5px; margin-bottom:25px;" />
 <table id="graduates-listing" class="display">
     <thead>
         <tr>
             <th>First Name</th>
+            <th>Middle Name</th>
             <th>Last Name</th>
-            <th>Qualifications</th>
-            <th>Job Type(s)</th>
+            <th>Email</th>
+            <th>Job Types</th>
             <th>Available Location(s)</th>
-            <th>Job Status</th>
             <th>Resume</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Adrian</td>
-            <td>Bennette</td>
-            <td>Test Qualifications, 1, 2</td>
-            <td>Plumbing, Barber, Electrician</td>
-            <td>St.Ann, Trelawny</td>
-            <td>Unemployed (Seeking)</td>
-            <td>Unavailable</td>
-        </tr>
+        @if (Model != null)
+        {
+            foreach (TrustNTA.Models.Seeker seeker in Model)
+            {
+                <tr>
+                    <td>@seeker.firstName</td>
+                    <td>@seeker.middleName</td>
+                    <td>@seeker.lastName</td>
+                    <td>@seeker.email</td>
+                    <td>@seeker.GetFormattedJobTypes()</td>
+                    <td>@seeker.GetFormattedJobLocations()</td>
+                    <td>--</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>--</td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -71,6 +71,231 @@ namespace TrustNTA.Data_Access
             }
         }
 
+        public static void SetSeekerAvailableLocations(string userId, List<SeekerLocationsAvailability> locations) 
+        {
+            if (locations != null) 
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string cmd = "Insert into Seeker_LocationAvailability (locationId, userId, locationName) values (@locationId, @userId)";
+
+                    using (SqlCommand command1 = new SqlCommand("Delete from Seeker_LocationAvailability where userId=@userId", connection))
+                    {
+                        command1.Parameters.AddWithValue("@userId", userId);
+                        command1.ExecuteNonQuery();
+                    }
+
+                    foreach (SeekerLocationsAvailability location in locations)
+                    {
+                        using (SqlCommand command2 = new SqlCommand(cmd, connection))
+                        {
+                            command2.Parameters.AddWithValue("@userId", userId);
+                            command2.Parameters.AddWithValue("@locationId", location.locationId);
+                            command2.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+        }
+
+        public static List<SeekerLocationsAvailability> GetSeekerLocationsAvailability(string userId) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "select seeker.locationId, seeker.userId, job.locationName from  Seeker_LocationAvailability seeker " +
+                             "inner join Job_Locations job on job.locationId = seeker.locationId where seeker.userId = @userId";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    command.Parameters.AddWithValue("@userId", userId);
+                    List<SeekerLocationsAvailability> locations = new List<SeekerLocationsAvailability>();
+                    using (SqlDataReader reader = command.ExecuteReader()) 
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                SeekerLocationsAvailability location = new SeekerLocationsAvailability
+                                {
+                                    locationId = Convert.ToInt32(reader["locationId"]),
+                                    locationName = reader["locationName"].ToString(),
+                                    userId = reader["userId"].ToString()
+                                };
+                                locations.Add(location);
+                            }
+                            return locations;
+                        }
+                        else 
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static List<SeekerJobTypeInterested> GetSeekerJobTypeInterests(string userId) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "select types.jobId, types.userId, pool.title from Seeker_InterestedJobTypes types " +
+                             "inner join JobPool pool on pool.jobId = types.jobId where types.userId = @userId";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    command.Parameters.AddWithValue("@userId", userId);
+                    List<SeekerJobTypeInterested> jobsInterested = new List<SeekerJobTypeInterested>();
+                    using (SqlDataReader reader = command.ExecuteReader()) 
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                SeekerJobTypeInterested jobInterested = new SeekerJobTypeInterested
+                                {
+                                    jobId = reader["jobId"].ToString(),
+                                    jobName = reader["title"].ToString(),
+                                    userId = reader["userId"].ToString()
+                                };
+                                jobsInterested.Add(jobInterested);
+                            }
+                            return jobsInterested;
+                        }
+                        else 
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void SetSeekerJobTypeIntrests(List<SeekerJobTypeInterested> jobInterests, string userId) 
+        {
+            if (jobInterests != null) 
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string cmd = "Insert into Seeker_InterestedJobTypes (jobId, userId) values (@jobId, @userId)";
+
+                    using (SqlCommand command1 = new SqlCommand("Delete from Seeker_InterestedJobTypes where userId=@userId", connection))
+                    {
+                        command1.Parameters.AddWithValue("@userId", userId);
+                        command1.ExecuteNonQuery();
+                    }
+
+                    foreach (SeekerJobTypeInterested interest in jobInterests)
+                    {
+                        using (SqlCommand command2 = new SqlCommand(cmd, connection))
+                        {
+                            command2.Parameters.AddWithValue("@userId", userId);
+                            command2.Parameters.AddWithValue("@jobId", interest.jobId);
+                            command2.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+        }
+
+        //public static List<EmployerVacancy> GetSpecificVacanciesForSeeker(string userId) 
+        //{
+        //    Seeker seeker = GetSeekerViaUID(userId);
+        //    if (seeker != null) 
+        //    {
+        //        List<EmployerVacancy> matchedVacancies = new List<EmployerVacancy>();
+        //        List<EmployerVacancy> allVacancies = GetAllEmployerVacancies();
+
+        //        foreach (EmployerVacancy vacancy in allVacancies) 
+        //        {
+        //            if(vacancy.)
+        //        }
+        //    }
+        //}
+
+        public static List<EmployerVacancy> GetAllEmployerVacancies()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmd = "select * from Employer_JobCreated order by dateCreated desc";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<EmployerVacancy> vacancies = new List<EmployerVacancy>();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                EmployerVacancy vacancy = new EmployerVacancy
+                                {
+                                    userId = reader["userId"].ToString(),
+                                    employerVacancyId = reader["employerJobId"].ToString(),
+                                    jobType = GetJobTypeName(reader["jobType"].ToString()),
+                                    jobTitle = reader["jobTitle"].ToString(),
+                                    startDate = Convert.ToDateTime(reader["startDate"]),
+                                    endDate = Convert.ToDateTime(reader["endDate"]),
+                                    vacancyStatus = reader["vacancyStatus"].ToString(),
+                                    locations = GetAvailLocations(reader["employerJobId"].ToString())
+                                };
+                                vacancies.Add(vacancy);
+                            }
+                            return vacancies;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static List<EmployerVacancy> GetAllEmployerVacanciesRange(int offset, int limit)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmd = "select * from Employer_JobCreated order by dateCreated desc offset "+offset+" rows fetch next "+limit+" rows only";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<EmployerVacancy> vacancies = new List<EmployerVacancy>();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                EmployerVacancy vacancy = new EmployerVacancy
+                                {
+                                    userId = reader["userId"].ToString(),
+                                    employerVacancyId = reader["employerJobId"].ToString(),
+                                    jobType = GetJobTypeName(reader["jobType"].ToString()),
+                                    jobTitle = reader["jobTitle"].ToString(),
+                                    startDate = Convert.ToDateTime(reader["startDate"]),
+                                    endDate = Convert.ToDateTime(reader["endDate"]),
+                                    vacancyStatus = reader["vacancyStatus"].ToString(),
+                                    locations = GetAvailLocations(reader["employerJobId"].ToString())
+                                };
+                                vacancies.Add(vacancy);
+                            }
+                            return vacancies;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
         public static List<EmployerVacancy> GetEmployerVacancies(string userId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -201,8 +426,8 @@ namespace TrustNTA.Data_Access
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmd = "Insert into Seeker (userId, dateCreated, trn, firstName, middleName, lastName, email, isGraduate, isVerified, identifier) " +
-                              "values (@userId, @dateCreated, @trn, @firstName, @middleName, @lastName, @email, @isGraduate, @isVerified, @identifier)";
+                string cmd = "Insert into Seeker (userId, dateCreated, trn, firstName, middleName, lastName, email, isGraduate, isVerified, identifier, employmentStatus) " +
+                              "values (@userId, @dateCreated, @trn, @firstName, @middleName, @lastName, @email, @isGraduate, @isVerified, @identifier, @employmentStatus)";
 
                 using (SqlCommand command = new SqlCommand(cmd, connection))
                 {
@@ -216,6 +441,7 @@ namespace TrustNTA.Data_Access
                     command.Parameters.AddWithValue("@email", account.email);
                     command.Parameters.AddWithValue("@isGraduate", account.isGraduate);
                     command.Parameters.AddWithValue("@isVerified", account.isVerified);
+                    command.Parameters.AddWithValue("@employmentStatus", account.employmentStatus);
                     command.ExecuteNonQuery();
                 }
             }
@@ -376,6 +602,49 @@ namespace TrustNTA.Data_Access
                             return seeker;
                         }
                         else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static List<Seeker> GetAllSeekers() 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "Select * from Seeker";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    List<Seeker> seekers = new List<Seeker>();
+                    using (SqlDataReader reader = command.ExecuteReader()) 
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                Seeker seeker = new Seeker
+                                {
+                                    userId = reader["userId"].ToString(),
+                                    dateCreated = Convert.ToDateTime(reader["dateCreated"]),
+                                    trn = reader["trn"].ToString(),
+                                    firstName = reader["firstName"].ToString(),
+                                    middleName = reader["middleName"].ToString(),
+                                    lastName = reader["lastName"].ToString(),
+                                    email = reader["email"].ToString(),
+                                    isGraduate = Convert.ToBoolean(reader["isGraduate"]),
+                                    isVerified = Convert.ToBoolean(reader["isVerified"]),
+                                    identifier = reader["identifier"].ToString(),
+                                    employmentStatus = reader["employmentStatus"].ToString()
+                                };
+                                seekers.Add(seeker);
+                            }
+                            return seekers;
+                        }
+                        else 
                         {
                             return null;
                         }

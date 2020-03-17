@@ -15,6 +15,7 @@ namespace TrustNTA.Models
         private string _lastName;
         private string _email;
         private string _identifier;
+        private string _employmentStatus;
 
         public bool isVerified { get; set; }
         public bool isGraduate { get; set; }
@@ -30,6 +31,21 @@ namespace TrustNTA.Models
                 else
                 {
                     _identifier = value;
+                }
+            }
+        }
+        public string employmentStatus
+        {
+            get { return _employmentStatus; }
+            set
+            {
+                if (value == null)
+                {
+                    _employmentStatus = "";
+                }
+                else
+                {
+                    _employmentStatus = value;
                 }
             }
         }

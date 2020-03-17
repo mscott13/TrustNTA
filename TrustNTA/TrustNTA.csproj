@@ -757,6 +757,8 @@
     <Compile Include="Models\SeekerActivation.cs" />
     <Compile Include="Models\SeekerJobCreated.cs" />
     <Compile Include="Models\SeekerJobInterested.cs" />
+    <Compile Include="Models\SeekerJobTypeInterested.cs" />
+    <Compile Include="Models\SeekerLocationsAvailability.cs" />
     <Compile Include="Models\SeekerSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalR-Hubs\ChatHub.cs" />

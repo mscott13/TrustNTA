@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TrustNTA.Models;
+using TrustNTA.Data_Access;
 
 namespace TrustNTA.Controllers
 {
@@ -10,7 +12,7 @@ namespace TrustNTA.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(Database.GetAllSeekers());
         }
 
         public ActionResult About()
@@ -29,6 +31,8 @@ namespace TrustNTA.Controllers
 
         public ActionResult Dashboard() 
         {
+            var a = Database.GetAllEmployerVacanciesRange(2, 3);
+            
             return View();
         }
     }

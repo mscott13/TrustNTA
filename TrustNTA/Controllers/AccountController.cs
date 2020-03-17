@@ -121,6 +121,7 @@ namespace TrustNTA.Controllers
                 account.isGraduate = account.isGraduate;
                 account.isVerified = account.isVerified;
                 account.identifier = account.identifier;
+                account.employmentStatus = account.employmentStatus;
                 Database.NewSeeker(account);
                 Response.StatusCode = 200;
                 return Json(new { status = "user_created" });

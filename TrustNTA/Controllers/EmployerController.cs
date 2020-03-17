@@ -14,11 +14,12 @@ namespace TrustNTA.Controllers
         // GET: Employer
         public ActionResult Index()
         {
+            List<Seeker> seekers = Database.GetAllSeekers();
             if (Session["userId"] == null)
             {
                 return RedirectToAction("login", "account");
             }
-            return View();
+            return View(seekers);
         }
 
         public ActionResult JobManagement(string intent)
