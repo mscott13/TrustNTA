@@ -13,6 +13,7 @@ namespace TrustNTA.Models
         public string employerVacancyId { get; set; }
 
         private string _jobType;
+        public string jobTypeId { get; set; }
         public string jobType 
         {
             get { return _jobType; }
@@ -101,6 +102,7 @@ namespace TrustNTA.Models
         }
         public List<Seeker> interestedClients { get; set; }
 
+        public Employer employer { get; set; }
         public string html_jobType { get; set; }
         public string html_startDate { get; set; }
         public string html_endDate { get; set; }

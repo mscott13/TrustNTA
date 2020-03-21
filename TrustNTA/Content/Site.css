@@ -261,12 +261,15 @@ html {
     text-align: center;
     padding: 7px;
     cursor: pointer;
+    transition: all .2s;
+    font-size: 13px;
 }
 
     .filter-bg:hover {
         background: #1174ba;
         color: white;
         box-shadow: 2px 6px 17px -2px rgba(0,0,0,0.28);
+        font-size: 15px;
     }
 
     .jobs-container
@@ -602,7 +605,17 @@ html {
 #vacancy-listing {
     width: 100%;
     margin-top: 25px;
+    font-size:14px;
 }
+
+    #vacancy-listing tbody tr.odd
+    {
+        transition: all .5s !important;
+    }
+
+    #vacancy-listing tbody tr.even {
+        transition: all .5s !important;
+    }
 
 
     #vacancy-listing tbody tr td:nth-child(8) i {
@@ -630,3 +643,41 @@ html {
         margin-right: 5px;
         font-size: 7px;
     }
+
+.search-clear {
+    font-size: 15px !important;
+    margin-right: 20px !important;
+    cursor: pointer;
+    transition: all .1s;
+    display: none;
+    color: #e11c37 !important;
+}
+
+    .search-clear:hover {
+        color: #e11c37 !important;
+        font-size: 18px !important;
+    }
+
+.row-highlight {
+    background-color: #b33647 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}
+
+    .row-highlight .sorting_1 {
+        background-color: inherit !important;
+    }
+
+    .row-highlight i 
+    {
+        color: white !important;
+    }
+
+#search-filter-modal .form-group {
+    margin-bottom: 5px !important;
+}
+
+#search-filter-modal
+{
+    font-size: 13px;
+}

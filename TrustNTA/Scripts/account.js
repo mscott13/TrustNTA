@@ -7,11 +7,11 @@
     });
 
     $("#btn-graduate-signin").click(function () {
-        var graduateIdentifier = $("#graduate-identifier").val();
+        var graduateUsername = $("#graduate-identifier").val();
         var graduatePassword = $("#graduate-password").val();
-        var json = JSON.stringify({ "identifier": graduateIdentifier, "password": graduatePassword });
+        var json = JSON.stringify({ "username": graduateUsername, "password": graduatePassword });
 
-        if (graduateIdentifier.length > 0 && graduatePassword.length > 0) {
+        if (graduateUsername.length > 0 && graduatePassword.length > 0) {
             $.ajax({
                 url: "/account/seeker-login",
                 type: "POST",

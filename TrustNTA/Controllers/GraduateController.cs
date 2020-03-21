@@ -12,7 +12,7 @@ namespace TrustNTA.Controllers
     {
         public ActionResult Index()
         {
-            return View(Database.GetAllSeekers());
+            return View();
         }
 
         public ActionResult About()
@@ -31,9 +31,16 @@ namespace TrustNTA.Controllers
 
         public ActionResult Dashboard() 
         {
-            var a = Database.GetAllEmployerVacanciesRange(2, 3);
             
-            return View();
+            if (Session["userId"] != null)
+            {
+                var userId = Session["userId"].ToString();
+                return View();
+            }
+            else 
+            {
+                return View();
+            }
         }
     }
 }

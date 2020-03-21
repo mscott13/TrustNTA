@@ -202,3 +202,4 @@ C:\Users\Mark Scott\source\repos\TrustNTA\TrustNTA\obj\Debug\TrustNTA.csprojAsse
 C:\Users\Mark Scott\source\repos\TrustNTA\TrustNTA\obj\Debug\TrustNTA.csproj.CopyComplete
 C:\Users\Mark Scott\source\repos\TrustNTA\TrustNTA\obj\Debug\TrustNTA.dll
 C:\Users\Mark Scott\source\repos\TrustNTA\TrustNTA\obj\Debug\TrustNTA.pdb
+C:\Users\Mark Scott\source\repos\TrustNTA\TrustNTA\obj\Debug\TrustNTA.csproj.CoreCompileInputs.cache

@@ -1,21 +1,89 @@
 ﻿$(document).ready(function () {
     var editObj;
+    var originalGraduatesData;
+
+    $('.search-clear').popover({
+        trigger: "hover",
+        delay: { "hide": 200 },
+        placement: "bottom"
+    });
+
     var graduatesTable = $("#graduates-listing").DataTable({
         "pageLength": 50
     });
+    originalGraduatesData = $("#graduates-listing").DataTable().data().toArray();
 
     var vacancyTable = $("#vacancy-listing").DataTable({
         "pageLength": 50,
         "columns": [
-            null,
+            { "width": "12%" },
             null,
             { "width": "23%" },
             null,
             null,
             { "width": "11%" },
             null,
+            null,
             null
         ]
+    });
+
+    $(".search-clear").click(function () {
+        $("#graduates-search-input").val("");
+        $("#graduates-listing").DataTable().clear().draw();
+        $("#graduates-listing").DataTable().rows.add(originalGraduatesData).draw();
+        $(this).hide();
+    });
+
+    $("#graduates-search-input").marcoPolo({
+        url: "/employer/seekers-search",
+        delay: 50,
+        cache: false,
+        required: false,
+        formatItem: function (data, $item) {
+            return data.fullname;
+        },
+        formatData: function (data) {
+            console.log(originalGraduatesData)
+            var searchData = [];
+            $.each(data, function (key, value) {
+                var rowData = [value.firstName, value.middleName, value.lastName, value.email, value.jobTypesList, value.locationsList, "--"];
+                searchData.push(rowData);
+            });
+
+            if ($("#graduates-search-input").length > 0) {
+                $("#graduates-listing").DataTable().clear().draw();
+                $("#graduates-listing").DataTable().rows.add(searchData).draw();
+            }
+            else
+            {
+                $("#graduates-listing").DataTable().clear().draw();
+                $("#graduates-listing").DataTable().rows.add(originalGraduatesData).draw();
+            }
+            return data;
+        },
+        onChange: function (e) {
+            if ($("#graduates-search-input").val().length === 0) {
+                $("#graduates-listing").DataTable().clear().draw();
+                $("#graduates-listing").DataTable().rows.add(originalGraduatesData).draw();
+                $(".search-clear").hide();
+            }
+            else
+            {
+                $(".search-clear").show();
+                $('#graduates-search-input').marcoPolo('search');
+            }
+        },
+        onSelect: function (data, $item) {
+            $("#graduates-search-input").val(data.fullname);
+            $('#graduates-search-input').marcoPolo('search', data.fullname);
+        },
+        formatError: function ($item, jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        },
+        onNoResults: function (i, $item) {
+            no_result = true;
+        }
     });
 
     $("#btn-create-jpost").click(function () {
@@ -56,7 +124,7 @@
                     data: json,
                     success: function (result) {
                         if (result.status === "vacancy_created") {
-                            vacancyTable.row.add([
+                            var row = vacancyTable.row.add([
                                 result.vacancy.jobTitle,
                                 result.vacancy.html_jobType,
                                 result.vacancy.html_locations,
@@ -64,11 +132,20 @@
                                 result.vacancy.html_endDate,
                                 result.vacancy.html_vacancyStatus,
                                 "--",
-                                "<i data-vid='" + result.vacancy.employerVacancyId + "' class='fas fa-edit btn-edit'></i>"
-                            ]).draw(false);
+                                "<i data-vid='" + result.vacancy.employerVacancyId + "' class='fas fa-edit btn-edit'></i>",
+                                "<i data-vid='" + result.vacancy.employerVacancyId + "' class='fas fa-trash-alt btn-delete'></i>"
+                            ]).draw(false).node();
                             console.log(result);
+                            console.log(row);
 
-                            alert("Job vacancy: " + result.vacancy.jobTitle + " has been created successfuly");
+                            setTimeout(function () {
+                                $(row).addClass("row-highlight").delay(5000).queue(function (next) {
+                                    $(this).removeClass("row-highlight");
+                                    next();
+                                });
+                            }, 200);
+
+                            //alert("Job vacancy: " + result.vacancy.jobTitle + " has been created successfuly");
                             $("#create-vacancy-modal").modal("hide");
                             ClearJobCreateFields();
                         }
@@ -154,9 +231,26 @@
 
     $("body").on("click", ".btn-delete", function () {
         var jobId = $(this).attr("data-vid");
-        var tr = $(this).parent().parent();
-        var table = $("#vacancy-listing").DataTable();
-        table.row(tr).remove().draw();
+        var json = JSON.stringify({ "jobId": jobId });
+        var row = $(this);
+
+        $.ajax({
+            url: "/employer/delete-vacancy",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: json,
+            success: function (result) {
+                if (result.status === "job_deleted")
+                {
+                    var tr = $(row).parent().parent();
+                    var table = $("#vacancy-listing").DataTable();
+                    table.row(tr).remove().draw();
+                }
+            },
+            error: function (result) {
+                console.log(result);
+            }
+        });
        
     });
 

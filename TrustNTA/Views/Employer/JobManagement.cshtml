@@ -36,54 +36,47 @@
             <td>Status</td>
             <td>Interested Clients</td>
             <td>Edit</td>
+            <td>Delete</td>
         </tr>
     </thead>
     <tbody>
 
         @if (Model.employerVacancies == null || Model.employerVacancies.Count() == 0)
         {
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+       
         }
         else
         {
             foreach (TrustNTA.Models.EmployerVacancy vacancy in Model.employerVacancies)
             {
-                <tr>
-                    <td>@vacancy.jobTitle</td>
-                    <td>@vacancy.jobType</td>
-                    <td>@vacancy.GetFormattedLocations()</td>
-                    <td>@vacancy.startDate.ToString("dd MMMM, yyyy")</td>
-                    <td>@vacancy.endDate.ToString("dd MMMM, yyyy")</td>
-                    <td>
-                        @if (vacancy.vacancyStatus == "Filled")
-                        {
-                            <i style="color: orange;" class="fas fa-circle"></i>@vacancy.vacancyStatus
-                        }
-                        else if (vacancy.vacancyStatus == "Open")
-                        {
-                            <i style="color: green;" class="fas fa-circle"></i>@vacancy.vacancyStatus
-                        }
-                        else if (vacancy.vacancyStatus == "Closed")
-                        {
-                            <i style="color:red;" class="fas fa-circle"></i>@vacancy.vacancyStatus
-                        }
-                        else
-                        {
-                            <i class="fas fa-circle"></i>@vacancy.vacancyStatus
-                        }
-                    </td>
-                    <td>--</td>
-                    <td><i data-vid="@vacancy.employerVacancyId" class="fas fa-edit btn-edit"></i></td>
-                </tr>
+    <tr>
+        <td>@vacancy.jobTitle</td>
+        <td>@vacancy.jobType</td>
+        <td>@vacancy.GetFormattedLocations()</td>
+        <td>@vacancy.startDate.ToString("dd MMMM, yyyy")</td>
+        <td>@vacancy.endDate.ToString("dd MMMM, yyyy")</td>
+        <td>
+            @if (vacancy.vacancyStatus == "Filled")
+            {
+                <i style="color: orange;" class="fas fa-circle"></i>@vacancy.vacancyStatus
+            }
+            else if (vacancy.vacancyStatus == "Open")
+            {
+                <i style="color: green;" class="fas fa-circle"></i>@vacancy.vacancyStatus
+            }
+            else if (vacancy.vacancyStatus == "Closed")
+            {
+                <i style="color:red;" class="fas fa-circle"></i>@vacancy.vacancyStatus
+            }
+            else
+            {
+                <i class="fas fa-circle"></i>@vacancy.vacancyStatus
+            }
+        </td>
+        <td>--</td>
+        <td><i data-vid="@vacancy.employerVacancyId" class="fas fa-edit btn-edit"></i></td>
+        <td><i data-vid="@vacancy.employerVacancyId" class="fas fa-trash-alt btn-delete"></i></td>
+    </tr>
             }
         }
     </tbody>

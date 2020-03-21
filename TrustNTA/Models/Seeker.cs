@@ -7,7 +7,9 @@ namespace TrustNTA.Models
 {
     public class Seeker
     {
+        public string username { get; set; }
         public string userId { get; set; }
+        public string fullname { get; set; }
         public DateTime dateCreated { get; set; }
         public string trn { get; set; }
         public string firstName { get; set; }
@@ -20,6 +22,8 @@ namespace TrustNTA.Models
         public DateTime lastAccessed { get; set; }
         public string password { get; set; }
         public string employmentStatus { get; set; }
+        public string jobTypesList { get; set; }
+        public string locationsList { get; set; }
         public List<SeekerJobTypeInterested> jobTypesInterested { get; set; }
         public List<SeekerLocationsAvailability> locationsAvailable { get; set; }
         public string GetFormattedJobLocations() 
@@ -31,7 +35,7 @@ namespace TrustNTA.Models
                 {
                     result += location.locationName + " ,";
                 }
-                result.TrimEnd(' ').TrimEnd(',');
+                return result.TrimEnd(' ').TrimEnd(',');
             }
             return "";
         }
@@ -45,7 +49,7 @@ namespace TrustNTA.Models
                 {
                     result += job.jobName + " ,";
                 }
-                result.TrimEnd(' ').TrimEnd(',');
+                return result.TrimEnd(' ').TrimEnd(',');
             }
             return "";
         }

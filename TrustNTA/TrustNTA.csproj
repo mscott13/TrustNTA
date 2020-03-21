@@ -517,6 +517,7 @@
     <Content Include="Scripts\fontawesome\solid.min.js" />
     <Content Include="Scripts\fontawesome\v4-shims.js" />
     <Content Include="Scripts\fontawesome\v4-shims.min.js" />
+    <Content Include="Scripts\graduate.js" />
     <Content Include="Scripts\index.js.flow" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
@@ -755,6 +756,7 @@
     <Compile Include="Models\JobLocationAvailability.cs" />
     <Compile Include="Models\Seeker.cs" />
     <Compile Include="Models\SeekerActivation.cs" />
+    <Compile Include="Models\SeekerDashboardData.cs" />
     <Compile Include="Models\SeekerJobCreated.cs" />
     <Compile Include="Models\SeekerJobInterested.cs" />
     <Compile Include="Models\SeekerJobTypeInterested.cs" />
@@ -770,7 +772,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
-    <Content Include="Views\Employer\test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿
+@model TrustNTA.Models.SeekerDashboardData
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -7,6 +10,11 @@
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-all.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/jquery.marcopolo.min.js"></script>
+    <script src="~/Scripts/graduate.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top nav-overrides">
@@ -21,22 +29,47 @@
                     <form class="form-inline my-2 my-lg-0">
                         <input style="width:290px;" class="form-control mr-sm-2" type="search" placeholder="Search a job..." aria-label="Search">
                         <select style="width:120px" class="custom-select" id="inputGroupSelect01">
-                            <option selected>Company</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option selected disabled>Company</option>
+                            @if (Model != null && Model.companies != null)
+                            {
+                                foreach (TrustNTA.Models.Company company in Model.companies)
+                                {
+                                    <option value="@company.companyId">@company.companyName</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="0" disabled>No companies available</option>
+                            }
                         </select>
                         <select style="width:120px; margin-left:3px;" class="custom-select" id="inputGroupSelect01">
-                            <option selected>Job Type</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option selected disabled>Job Type</option>
+                            @if (Model != null && Model.jobTypes != null)
+                            {
+                                foreach (TrustNTA.Models.Job job in Model.jobTypes)
+                                {
+                                    <option value="@job.jobId">@job.title</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="0" disabled>No job categories available</option>
+                            }
                         </select>
                         <select style="width:120px; margin-left:3px;" class="custom-select" id="inputGroupSelect01">
-                            <option selected>Location</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option selected disabled>Location</option>
+                            @if (Model != null && Model.jobLocations != null)
+                            {
+                                foreach (TrustNTA.Models.JobLocation jobLocation in Model.jobLocations)
+                                {
+                                    <option value="@jobLocation.locationName">@jobLocation.locationName</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="0" disabled>No job locations available</option>
+                            }
+
                         </select>
                         <button style="margin-left:10px; border: 1px solid #838383;" type="button" class="btn btn-light">Search</button>
                     </form>
@@ -65,7 +98,5 @@
     <div style="margin-top: 15px;" class="container">
         @RenderBody()
     </div>
-    <script src="~/Scripts/jquery-3.4.1.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
 </body>
 </html>

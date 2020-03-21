@@ -1,4 +1,5 @@
-﻿
+﻿@model TrustNTA.Models.SeekerDashboardData
+
 @{
     Layout = "~/Views/Shared/_TrustNTA_Seeker_Layout.cshtml";
 }
@@ -74,139 +75,50 @@
     </div>
 </div>
 <hr style="width:100%; margin-top: 2px; margin-bottom:2px;" />
+
 <div class="jobs-container">
     <div class="row row-vspace">
-        <div class="col-sm-3 col-padding-lr-adjust">
-            <div class="job">
-                <div class="company-img">
-                    <img alt="Company Logo" src="" />
-                </div>
-                <div class="company-title">
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
-                    <h5 class="job-title">UX Lead and Researcher - <span class="job-type">Designer</span></h5>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span> Kingston, St.Ann, Trelawny</span>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> 03/11/2020 to 04/15/2020</span>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">Open</span></span>
-                </div>
-                <div class="decision">
-                    <div class="decision-container">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="option1" checked> Seeking
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="option2"> Not Interested
-                            </label>
+        @if (Model != null && Model.vacanciesLimited != null)
+        {
+            foreach (TrustNTA.Models.EmployerVacancy vacancy in Model.vacanciesLimited)
+            {
+                <div class="col-sm-3 col-padding-lr-adjust">
+                    <div class="job">
+                        <div class="company-img">
+                            <img alt="Company Logo" src="" />
+                        </div>
+                        <div class="company-title">
+                            <h4>@vacancy.employer.companyName</h4>
+                            <h5 class="job-title">UX Lead and Researcher - <span class="job-type">@vacancy.html_jobType</span></h5>
+                        </div>
+                        <div class="job-details">
+                            <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span>@vacancy.html_locations</span>
+                        </div>
+                        <div class="job-details">
+                            <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> @vacancy.startDate.ToString("MM/dd/yyyy") to @vacancy.endDate.ToString("MM/dd/yyyy")</span>
+                        </div>
+                        <div class="job-details">
+                            <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">@vacancy.vacancyStatus</span></span>
+                        </div>
+                        <div class="decision">
+                            <div class="decision-container">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-secondary active">
+                                        <input type="radio" name="options" id="option1" checked> Seeking
+                                    </label>
+                                    <label class="btn btn-secondary">
+                                        <input type="radio" name="options" id="option2"> Not Interested
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-sm-3 col-padding-lr-adjust">
-            <div class="job">
-                <div class="company-img">
-                    <img alt="Company Logo" src="" />
-                </div>
-                <div class="company-title">
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
-                    <h5 class="job-title">UX Lead and Researcher - <span class="job-type">Designer</span></h5>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span> Kingston, St.Ann, Trelawny</span>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> 03/11/2020 to 04/15/2020</span>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">Open</span></span>
-                </div>
-                <div class="decision">
-                    <div class="decision-container">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="option1" checked> I am Interested
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="option2"> Not Interested
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 col-padding-lr-adjust">
-            <div class="job">
-                <div class="company-img">
-                    <img alt="Company Logo" src="" />
-                </div>
-                <div class="company-title">
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
-                    <h5 class="job-title">UX Lead and Researcher - <span class="job-type">Designer</span></h5>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span> Kingston, St.Ann, Trelawny</span>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> 03/11/2020 to 04/15/2020</span>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">Open</span></span>
-                </div>
-                <div class="decision">
-                    <div class="decision-container">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="option1" checked> I am Interested
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="option2"> Not Interested
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 col-padding-lr-adjust">
-            <div class="job">
-                <div class="company-img">
-                    <img alt="Company Logo" src="" />
-                </div>
-                <div class="company-title">
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
-                    <h5 class="job-title">UX Lead and Researcher - <span class="job-type">Designer</span></h5>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-map-marked-alt"></i><span><span class="job-detail-title">Locations:</span> Kingston, St.Ann, Trelawny</span>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-calendar-alt"></i><span><span class="job-detail-title">Date availability:</span> 03/11/2020 to 04/15/2020</span>
-                </div>
-                <div class="job-details">
-                    <i class="fas fa-briefcase"></i><span><span class="job-detail-title">Vacancy status:</span> <span style="margin-left: 8px;" class="badge badge-pill badge-success">Open</span></span>
-                </div>
-                <div class="decision">
-                    <div class="decision-container">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="option1" checked> I am Interested
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="option2"> Not Interested
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+            }
+        }
     </div>
 </div>
+
 
 <div class="load-more-container">
     <button type="button" class="btn btn-light  btn-sm btn-load-more"><i style="margin-right:3px" class="fas fa-angle-down"></i>Load more</button>
@@ -264,4 +176,101 @@
     </div>
 </div>
 
-
+<div id="search-filter-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i style="margin-right:5px;" class="fas fa-sliders-h"></i>Apply a search filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Filter by Job Title</label>
+                        <input style="height: 60px;font-size: 25px;text-transform: capitalize;" type="email" class="form-control" id="filter_jobTitle" placeholder="Filter jobs by name...">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>By Company</label>
+                            <select id="filter_company" class="form-control">
+                                <option value="0">Company filter</option>
+                                @if (Model != null && Model.companies != null)
+                                {
+                                    foreach (TrustNTA.Models.Company company in Model.companies)
+                                    {
+                                        <option value="@company.companyName">@company.companyName</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="0" disabled>No companies available</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Job Type</label>
+                            <select id="filter_jobType" class="form-control">
+                                <option value="0" selected disabled>Job filter</option>
+                                @if (Model != null && Model.jobTypes != null)
+                                {
+                                    foreach (TrustNTA.Models.Job job in Model.jobTypes)
+                                    {
+                                        <option value="@job.title">@job.title</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="0" disabled>No job categories available</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Location</label>
+                            <select id="filter_location" class="form-control">
+                                <option value="0" selected disabled>Location filter</option>
+                                @if (Model != null && Model.jobLocations != null)
+                                {
+                                    foreach (TrustNTA.Models.JobLocation jobLocation in Model.jobLocations)
+                                    {
+                                        <option value="@jobLocation.locationName">@jobLocation.locationName</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="0" disabled>No job locations available</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Vacancy Status</label>
+                            <select id="filter_vacancyStatus" class="form-control">
+                                <option value="0" selected disabled>Vacancy filter</option>
+                                <option value="Open">Open</option>
+                                <option value="Filled">Filled</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Start Date</label>
+                            <input type="email" class="form-control" id="filter_startDate" placeholder="Filter by start date...">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>End Date</label>
+                            <input type="email" class="form-control" id="filter_endDate" placeholder="Filter by end date...">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-close-searchfilter-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btn-filter-search" type="button" class="btn btn-primary"><i style="margin-right: 5px;" class="fas fa-pencil-alt"></i>Apply Filter</button>
+            </div>
+        </div>
+    </div>
+</div>

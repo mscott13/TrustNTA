@@ -12,10 +12,9 @@
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
 
     <script src="~/Scripts/jquery-3.4.1.js"></script>
-   
     <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/jquery.marcopolo.min.js"></script>
-     <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
 </head>
 <body>
         <div class="employer-main">
@@ -42,6 +41,7 @@
                     <div class="custom-input-group">
                         <i class="fas fa-search"></i>
                         <input id="graduates-search-input" type="text" class="graduates-search-input" placeholder="Search Graduates..." spellcheck="false" autofocus />
+                        <i class="fas fa-times search-clear" data-content="Clear search query"></i>
                     </div>
 
                     <ul class="employer-top-nav-links">
@@ -53,27 +53,6 @@
                 </div>
             </div>
         </div>
-
-    <script>
-        $("#graduates-search-input").marcoPolo({
-            url: "/employer/seekers-search",
-            delay: 50,
-            cache: false,
-            required: false,
-            formatItem: function (data, $item) {
-                return data.data;
-            },
-            onSelect: function (data, $item) {
-                $("#graduates-search-input").val(data.data);
-            },
-            formatError: function ($item, jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown);
-            },
-            onNoResults: function (i, $item) {
-                no_result = true;
-            }
-        });
-    </script>
 
     @RenderSection("scripts", false)
 </body>

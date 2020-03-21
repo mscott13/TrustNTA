@@ -19,9 +19,9 @@ namespace TrustNTA.Controllers
         [ActionName("seeker-login")]
         public ActionResult SeekerLogin(Seeker seeker)
         {
-            if (Database.CheckSeekerExist(seeker.identifier))
+            if (Database.CheckSeekerExistViaUname(seeker.username))
             {
-                Seeker user = Database.GetSeekerViaIdentifier(seeker.identifier);
+                Seeker user = Database.GetSeekerViaUsername(seeker.username);
                 if (user.isVerified)
                 {
                     if (PasswordManagement.VerifyPassword(seeker.password, user.password))
@@ -53,7 +53,6 @@ namespace TrustNTA.Controllers
         [ActionName("employer-login")]
         public ActionResult EmployerLogin(Employer employer)
         {
-            var result = Miscellaneous.SendEmail();
             if (Database.CheckEmployerExist(employer.username))
             {
                 Employer user = Database.GetEmployerViaUsername(employer.username);
@@ -102,14 +101,13 @@ namespace TrustNTA.Controllers
                 Response.StatusCode = 403;
                 return Json(new { status = "user_exist"});
             }
-           
         }
 
         [HttpPost]
         [ActionName("add-seeker")]
         public ActionResult AddSeeker(SeekerAccount account)
         {
-            if (!Database.CheckSeekerExist(account.identifier))
+            if (!Database.CheckSeekerExistViaId(account.identifier))
             {
                 account.userId = account.userId;
                 account.dateCreated = account.dateCreated;
@@ -137,7 +135,7 @@ namespace TrustNTA.Controllers
         [ActionName("seeker-activation")]
         public ActionResult ActivateGraduateAccount(string identifier) 
         {
-            if (Database.CheckSeekerExist(identifier)) 
+            if (Database.CheckSeekerExistViaId(identifier)) 
             {
                 Seeker user = Database.GetSeekerViaIdentifier(identifier);
                 Database.NewSeekerActivationCode(user.userId, Miscellaneous.GenerateActivationCode(), DateTime.Now.AddDays(1));

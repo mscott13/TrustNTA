@@ -14,11 +14,8 @@ namespace TrustNTA.Controllers
         // GET: Employer
         public ActionResult Index()
         {
-            List<Seeker> seekers = Database.GetAllSeekers();
-            if (Session["userId"] == null)
-            {
-                return RedirectToAction("login", "account");
-            }
+            List<Seeker> seekers = Database.GetAllSeekers(150);
+            var result = Database.GetSpecificVacanciesForSeeker("3e8868bc-a815-44f3-b5b1-e8a8c5cb9f0c");
             return View(seekers);
         }
 
@@ -55,7 +52,7 @@ namespace TrustNTA.Controllers
         [ActionName("seekers-search")]
         public ActionResult GetSeekersByName(string q)
         {
-            List<SeekerSearch> seekers = Database.GetSeekersByName(q);
+            List<Seeker> seekers = Database.GetSeekersByName(q);
             Response.StatusCode = 200;
             return Json(seekers, JsonRequestBehavior.AllowGet);
         }
@@ -107,7 +104,7 @@ namespace TrustNTA.Controllers
         [ActionName("delete-vacancy")]
         public ActionResult DeleteVacancy(string jobId) 
         {
-            Database.DeleteJobVacancy(jobId);
+            Database.SetJobVacancyInvisible(jobId);
             return Json(new { status = "job_deleted" }, JsonRequestBehavior.AllowGet);
         }
     }
