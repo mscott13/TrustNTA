@@ -241,6 +241,29 @@
         });
     });
 
+    $("body").on("click", ".btn-delete", function () {
+        var jobId = $(this).attr("data-vid");
+        var json = JSON.stringify({ "jobId": jobId });
+        var row = $(this);
+
+        $.ajax({
+            url: "/employer/delete-vacancy",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: json,
+            success: function (result) {
+                if (result.status === "job_deleted") {
+                    var tr = $(row).parent().parent();
+                    var table = $("#vacancy-listing").DataTable();
+                    table.row(tr).remove().draw();
+                }
+            },
+            error: function (result) {
+                console.log(result);
+            }
+        });
+    });
+
     $("body").on("click", ".remove-location-avail", function () {
 
     });
@@ -251,7 +274,7 @@
 
     $("#btn-add-loc-avail").click(function () {
         var value = $("#loc-prefs-selector option:selected").val();
-        var text = $($("#loc-prefs-selector option:selected").text();
+        var text = $("#loc-prefs-selector option:selected").text();
         var target = $("#loc-prefs-container");
     });
 

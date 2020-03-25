@@ -229,30 +229,7 @@
         $("#edit-vacancy-moda").modal("hide");
     });
 
-    $("body").on("click", ".btn-delete", function () {
-        var jobId = $(this).attr("data-vid");
-        var json = JSON.stringify({ "jobId": jobId });
-        var row = $(this);
-
-        $.ajax({
-            url: "/employer/delete-vacancy",
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: json,
-            success: function (result) {
-                if (result.status === "job_deleted")
-                {
-                    var tr = $(row).parent().parent();
-                    var table = $("#vacancy-listing").DataTable();
-                    table.row(tr).remove().draw();
-                }
-            },
-            error: function (result) {
-                console.log(result);
-            }
-        });
-       
-    });
+  
 
     $("body").on("click", ".btn-edit", function () {
         editObj = $(this);
@@ -261,7 +238,7 @@
        
         if (rowData[5].indexOf("Closed") < 0 && rowData[5].indexOf("Filled") < 0)
         {
-            RestoreVacancyOptions(editObj.attr("data-vid"));
+            RestoreVacancyOptions(editObj.attr("data-jobId"));
             $("#edit-vacancy-modal").modal("show");
         }
     });

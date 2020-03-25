@@ -19,7 +19,7 @@
                 data: json,
                 success: function (result) {
                     if (result.status === "user_authenticated") {
-                        window.location.href = "/graduate/dashboard";
+                        window.location.href = "/graduate/jobmanagement";
                     }
                     else {
                         alert("Password is incorrect, try again.");
@@ -45,7 +45,7 @@
                 data: json,
                 success: function (result) {
                     if (result.status === "user_authenticated") {
-                        window.location.href = "/employer";
+                        window.location.href = "/employer/index";
                     }
                     else {
                         alert("Password is incorrect, try again.");
