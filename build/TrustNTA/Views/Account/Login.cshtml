@@ -1,0 +1,101 @@
+﻿
+@{
+    Layout = null;
+    string seekerActive, employerActive;
+    if (ViewData["utype"] != null)
+    {
+        if (ViewData["utype"].ToString() == "seeker")
+        {
+            seekerActive = "active";
+            employerActive = "";
+        }
+        else if (ViewData["utype"].ToString() == "employer")
+        {
+            seekerActive = "";
+            employerActive = "active";
+        }
+        else
+        {
+            seekerActive = "active";
+            employerActive = "";
+        }
+    }
+    else
+    {
+        seekerActive = "active";
+        employerActive = "";
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Heart Trust NTA - Login</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-all.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/account.css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-main">
+            <div class="lg-container-left">
+                <div class="overlay">
+                    <div class="overlay-content">
+                        <div class="company-logo">
+                            <img src="~/Content/Images/company-logo.png" />
+                        </div>
+
+                        <h4 class="login-portal-title">Job Portal - Login</h4>
+                        <p class="login-portal-description">Connecting graduates of HEART Trust/NTA with employers for potentially filling Job Vacancy Posts...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="lg-container-right">
+                <h4 class="login-main-title">HEART Trust/NTA Job Portal</h4>
+                <p class="login-main-promt">Sign in to continue</p>
+
+                <ul style="font-size: 13px;" class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link @seekerActive" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Graduate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @employerActive" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Employer</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane @seekerActive" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <label class="login-label">Username</label>
+                        <input class="custom-input" type="text" id="graduate-identifier" placeholder="Enter the username for your account" />
+                        <label class="login-label">Password</label>
+                        <input class="custom-input" id="graduate-password" type="password" placeholder="Password" />
+
+                        <a href="#" class="reset-pw">Reset your password</a>
+                        <button id="btn-graduate-signin" type="button" class="btn btn-light btn-block sign-in">LOGIN</button>
+
+                        <a href="/account/register?utype=seeker" class="account-activate">Not registered? click here to activate your account...</a>
+                    </div>
+                    <div class="tab-pane @employerActive" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <label class="login-label">Employer ID</label>
+                        <input id="employer-username" class="custom-input" type="text" placeholder="Employer ID" />
+                        <label class="login-label">Password</label>
+                        <input id="employer-password" class="custom-input" type="password" placeholder="Password" />
+
+                        <a href="#" class="reset-pw">Reset your password</a>
+                        <button id="btn-employer-login" type="button" class="btn btn-light btn-block sign-in">LOGIN</button>
+
+                        <a href="/account/register?utype=employer" class="account-activate">Not registered? click here to create a new account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/account.js"></script>
+</body>
+</html>

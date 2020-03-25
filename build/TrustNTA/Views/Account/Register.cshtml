@@ -1,0 +1,222 @@
+﻿@model IEnumerable<TrustNTA.Models.Company>
+
+@{
+    Layout = null;
+    string seekerActive, employerActive;
+    if (ViewData["utype"] != null)
+    {
+        if (ViewData["utype"].ToString() == "seeker")
+        {
+            seekerActive = "active";
+            employerActive = "";
+        }
+        else if (ViewData["utype"].ToString() == "employer")
+        {
+            seekerActive = "";
+            employerActive = "active";
+        }
+        else
+        {
+            seekerActive = "active";
+            employerActive = "";
+        }
+    }
+    else
+    {
+        seekerActive = "active";
+        employerActive = "";
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Heart Trust NTA - Register</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-all.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/account.css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-main">
+            <div class="lg-container-left">
+                <div class="overlay">
+                    <div class="overlay-content">
+                        <div class="company-logo">
+                            <img src="~/Content/Images/company-logo.png" />
+                        </div>
+
+                        <h4 class="login-portal-title">Job Portal - Register</h4>
+                        <p class="login-portal-description">Connecting graduates of HEART Trust/NTA with employers for potentially filling Job Vacancy Posts...</p>
+                        <a href="/account/login"><div type="button" class="btn btn-outline-light btn-sm"><i style="margin-right:5px;" class="fas fa-external-link-alt"></i>Back to Login</div></a>
+                    </div>
+                </div>
+            </div>
+            <div class="lg-container-right">
+                <h4 class="login-main-title">HEART Trust/NTA Job Portal</h4>
+                <p class="login-main-promt">Register as an employer or activate an existing graduate account</p>
+
+                <ul style="font-size: 13px;" class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link @seekerActive" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Graduate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @employerActive" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Employer</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane @seekerActive" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <label class="login-label">Graduate Identifier</label>
+                        <input class="custom-input" type="text" placeholder="Graduate Identifier" />
+                        <label class="login-label">Email address</label>
+                        <input class="custom-input" type="password" placeholder="Enter email address registered with Heart" />
+
+                        <button style="margin-top: 14px" type="button" class="btn btn-light btn-block sign-in">SEND ACTIVATION LINK</button>
+                    </div>
+                    <div class="tab-pane @employerActive" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="employer-register-as">
+                            <p style="display: inline; margin-right: 3px; font-size: 13px;">Register as: </p>
+                            <div style="font-size: 13px; float:right;" class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="register-as" id="check-register-company" value="COMPANY">
+                                <label class="form-check-label" for="check-register-company">Company</label>
+                            </div>
+                            <div style="font-size: 13px; float:right;" class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="register-as" id="check-register-individual" value="INDIVIDUAL" checked>
+                                <label class="form-check-label" for="check-register-individual">Individual</label>
+                            </div>
+                        </div>
+                        <hr style="margin-top:2px;" />
+
+                        <form class="employer-register-form">
+                            <div id="choose-company-container" class="form-row company-hide">
+                                <div class="form-group col-md-8">
+                                    <label for="inputEmail4">Choose a company</label>
+                                    <select id="company-selector" class="form-control form-control-sm">
+                                        <option value="0" disabled selected>Choose company</option>
+                                        @foreach (TrustNTA.Models.Company company in Model)
+                                        {
+                                            <option value="@company.companyId">@company.companyName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputEmail4" style="font-size:11px; font-style:italic;">Company not listed?</label>
+                                    <button type="button" id="btn-add-company" class="btn btn-primary btn-sm btn-block"><i style="margin-right:5px;" class="far fa-building"></i>Add company</button>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="emp_firstName">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="emp_lastName">
+                                </div>
+                            </div>
+                            <div id="company-associated-container" class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Company associated with (Optional)</label>
+                                    <input type="text" class="form-control form-control-sm" id="emp_companyOptional">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Address</label>
+                                    <input type="text" class="form-control form-control-sm" id="emp_address">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label>Email address</label>
+                                    <input type="text" class="form-control form-control-sm" id="emp_email">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Telephone</label>
+                                    <input type="text" class="form-control form-control-sm" id="emp_telephone">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control form-control-sm" id="emp_username">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Password</label>
+                                    <input type="password" class="form-control form-control-sm" id="emp_password">
+                                    <small id="emailHelp" class="form-text text-muted">Passwords must be at least six chars in length and contain a special character.</small>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Confirm</label>
+                                    <input type="password" class="form-control form-control-sm" id="emp_passwordConfirm">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <button id="btn-register-employer" type="button" class="btn btn-light btn-block sign-in">REGISTER YOUR ACCOUNT</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-company-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i style="margin-right:5px;" class="far fa-building"></i>Add company</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form style="font-size: 12px;">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Company Name</label>
+                                <input type="email" class="form-control form-control-sm." id="add_companyName">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Address</label>
+                                <input type="text" class="form-control form-control-sm." id="add_companyAddress">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="set-as-company" type="button" class="btn btn-primary">Set as company</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reg-success-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Account Registration</h5>
+                </div>
+                <div style="padding:10px;" class="modal-body">
+                    <h4 class="success-icon-styles"><i class="fas fa-thumbs-up"></i>Success</h4>
+                    <p style="text-align:center; font-size: 14px; margin-left:10px; margin-right:10px;">Your account has been created successfully, proceed to the login screen and sign in.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="/account/login"><div type="button" class="btn btn-primary"><i style="margin-right:5px;" class="fas fa-sign-in-alt"></i>Go to Login</div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/account.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</body>
+</html>

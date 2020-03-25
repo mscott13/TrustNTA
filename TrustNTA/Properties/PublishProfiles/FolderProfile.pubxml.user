@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Mark Scott\source\repos\TrustNTA\TrustNTA\bin\Release\Publish</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Mark Scott\source\repos\TrustNTA\build\TrustNTA</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -235,10 +235,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2020 21:12:46</publishTime>
     </File>
     <File Include="bin/TrustNTA.dll">
-      <publishTime>03/24/2020 10:06:05</publishTime>
+      <publishTime>03/25/2020 17:23:19</publishTime>
     </File>
     <File Include="bin/TrustNTA.pdb">
-      <publishTime>03/24/2020 10:06:05</publishTime>
+      <publishTime>03/25/2020 17:23:19</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>03/14/2020 21:12:46</publishTime>
@@ -1225,7 +1225,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/16/2020 00:13:57</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>03/24/2020 01:30:49</publishTime>
+      <publishTime>03/25/2020 04:26:48</publishTime>
     </File>
     <File Include="Content/solid.css">
       <publishTime>03/14/2020 21:12:45</publishTime>
@@ -1267,7 +1267,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2020 21:12:45</publishTime>
     </File>
     <File Include="Scripts/account.js">
-      <publishTime>03/18/2020 14:28:42</publishTime>
+      <publishTime>03/25/2020 11:57:54</publishTime>
     </File>
     <File Include="Scripts/autocomplete.js">
       <publishTime>03/15/2020 16:10:52</publishTime>
@@ -1525,7 +1525,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2020 21:12:45</publishTime>
     </File>
     <File Include="Scripts/employer.js">
-      <publishTime>03/19/2020 15:40:02</publishTime>
+      <publishTime>03/25/2020 10:25:04</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.js">
       <publishTime>03/14/2020 21:12:45</publishTime>
@@ -1594,7 +1594,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2020 21:12:45</publishTime>
     </File>
     <File Include="Scripts/graduate.js">
-      <publishTime>03/20/2020 15:28:22</publishTime>
+      <publishTime>03/25/2020 07:35:30</publishTime>
     </File>
     <File Include="Scripts/index.js.flow">
       <publishTime>03/14/2020 21:12:45</publishTime>
@@ -1697,6 +1697,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/README.md">
       <publishTime>03/14/2020 21:12:45</publishTime>
+    </File>
+    <File Include="Scripts/site.js">
+      <publishTime>03/24/2020 20:26:59</publishTime>
     </File>
     <File Include="Scripts/src/index.js">
       <publishTime>03/14/2020 21:12:45</publishTime>
@@ -1930,7 +1933,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/18/2020 09:12:32</publishTime>
     </File>
     <File Include="Views/Employer/JobManagement.cshtml">
-      <publishTime>03/19/2020 00:06:01</publishTime>
+      <publishTime>03/24/2020 20:02:05</publishTime>
     </File>
     <File Include="Views/Graduate/About.cshtml">
       <publishTime>03/14/2020 21:12:45</publishTime>
@@ -1941,6 +1944,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Graduate/Dashboard.cshtml">
       <publishTime>03/24/2020 09:35:58</publishTime>
     </File>
+    <File Include="Views/Graduate/JobManagement.cshtml">
+      <publishTime>03/25/2020 07:25:40</publishTime>
+    </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>03/14/2020 21:12:45</publishTime>
     </File>
@@ -1948,10 +1954,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2020 21:12:45</publishTime>
     </File>
     <File Include="Views/Shared/_TrustNTA_Employer_Layout.cshtml">
-      <publishTime>03/18/2020 11:38:42</publishTime>
+      <publishTime>03/25/2020 11:59:09</publishTime>
     </File>
     <File Include="Views/Shared/_TrustNTA_Seeker_Layout.cshtml">
-      <publishTime>03/20/2020 15:41:50</publishTime>
+      <publishTime>03/24/2020 20:33:18</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>03/14/2020 21:12:45</publishTime>
@@ -1960,7 +1966,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2020 21:12:45</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/24/2020 10:05:30</publishTime>
+      <publishTime>03/25/2020 17:23:20</publishTime>
     </File>
     <File Include="webfonts/fa-brands-400.eot">
       <publishTime>03/14/2020 21:12:45</publishTime>
