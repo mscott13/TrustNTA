@@ -1,0 +1,227 @@
+﻿
+@model TrustNTA.Models.JobManagementObjects
+
+@{
+    ViewBag.Title = "JobManagement";
+    Layout = "~/Views/Shared/_TrustNTA_Employer_Layout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/employer.js"></script>
+}
+
+<div class="employer-header-wrapper">
+    <div class="header-left">
+        <h4 class="employer-main-title">Job Management</h4>
+        <p class="employer-main-subtitle">Create, edit and view job posts</p>
+    </div>
+    <div class="header-right">
+        <button id="btn-create-jpost2" type="button" class="btn btn-success btn-create-jpost"><i style="margin-right: 5px; color: #fff;" class="fas fa-building"></i>Create a new job post</button>
+    </div>
+</div>
+
+<hr style="margin-top:5px; margin-bottom:25px;" />
+<div class="job-statistics">
+    <h4 style="color:#d8d8d8;">JOB STATISTICS HERE</h4>
+</div>
+<h5 class="employer-main-secondarytitle">List of Job Vacancies</h5>
+<table id="vacancy-listing" class="display">
+    <thead>
+        <tr>
+            <td>Job Title</td>
+            <td>Job Type</td>
+            <td>Locations</td>
+            <td>Start Date</td>
+            <td>End Date</td>
+            <td>Status</td>
+            <td>Interested Clients</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.employerVacancies == null || Model.employerVacancies.Count() == 0)
+        {
+       
+        }
+        else
+        {
+            foreach (TrustNTA.Models.EmployerVacancy vacancy in Model.employerVacancies)
+            {
+    <tr>
+        <td>@vacancy.jobTitle</td>
+        <td>@vacancy.jobType</td>
+        <td>@vacancy.GetFormattedLocations()</td>
+        <td>@vacancy.startDate.ToString("dd MMMM, yyyy")</td>
+        <td>@vacancy.endDate.ToString("dd MMMM, yyyy")</td>
+        <td>
+            @if (vacancy.vacancyStatus == "Filled")
+            {
+                <i style="color: orange;" class="fas fa-circle"></i>@vacancy.vacancyStatus
+            }
+            else if (vacancy.vacancyStatus == "Open")
+            {
+                <i style="color: green;" class="fas fa-circle"></i>@vacancy.vacancyStatus
+            }
+            else if (vacancy.vacancyStatus == "Closed")
+            {
+                <i style="color:red;" class="fas fa-circle"></i>@vacancy.vacancyStatus
+            }
+            else
+            {
+                <i class="fas fa-circle"></i>@vacancy.vacancyStatus
+            }
+        </td>
+        <td>--</td>
+        <td><i data-vid="@vacancy.employerVacancyId" class="fas fa-edit btn-edit"></i></td>
+        <td><i data-vid="@vacancy.employerVacancyId" class="fas fa-trash-alt btn-delete"></i></td>
+    </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div id="create-vacancy-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i style="margin-right:5px;" class="fas fa-briefcase"></i>Create Job Vacancy</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="inputEmail4">Job Post Name</label>
+                            <input type="email" class="form-control" id="vacancy-job-post-name">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputEmail4">Job Type</label>
+                            <select id="job-selector" class="form-control">
+                                <option selected disabled value="0">Job Type</option>
+                                @foreach (TrustNTA.Models.Job job in Model.jobs)
+                                {
+                                    <option value="@job.jobId">@job.title</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail4">Locations (Optional)</label>
+                        <select id="locations-selector" class="form-control" multiple>
+                            <option selected disabled value="0">Job Locations</option>
+                            @foreach (TrustNTA.Models.JobLocation jobLocation in Model.jobLocations)
+                            {
+                                <option value="@jobLocation.locationId">@jobLocation.locationName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEm
+                                   ail4">Start Date</label>
+                            <input disabled type="email" class="form-control" id="start-date" data-dateraw="@DateTime.Now.ToString()" value="@DateTime.Now.ToString("dddd, dd MMMM yyyy")">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">End of Publication Date</label>
+                            <input type="email" class="form-control" id="end-date">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-close-vacancy-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btn-post-vacancy" type="button" class="btn btn-primary"><i style="margin-right: 5px;" class="fas fa-paper-plane"></i>Post Job Vacancy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="edit-vacancy-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i style="margin-right:5px;" class="fas fa-briefcase"></i>Update Job Vacancy</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="inputEmail4">Job Post Name</label>
+                            <input type="email" class="form-control" id="update-vacancy-job-post-name">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputEmail4">Job Type</label>
+                            <select id="update-job-selector" class="form-control">
+                                <option selected disabled value="0">Job Type</option>
+                                @foreach (TrustNTA.Models.Job job in Model.jobs)
+                                {
+                                    <option value="@job.jobId">@job.title</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail4">Locations (Optional)</label>
+                        <select id="update-locations-selector" class="form-control" multiple>
+                            <option selected disabled value="0">Job Locations</option>
+                            @foreach (TrustNTA.Models.JobLocation jobLocation in Model.jobLocations)
+                            {
+                                <option value="@jobLocation.locationId">@jobLocation.locationName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEm
+                                   ail4">Start Date</label>
+                            <input disabled type="email" class="form-control" id="update-start-date" data-dateraw="@DateTime.Now.ToString()" value="@DateTime.Now.ToString("dddd, dd MMMM yyyy")">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">End of Publication Date</label>
+                            <input type="email" class="form-control" id="update-end-date">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                           
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Vacancy Status</label>
+                            <select id="update-vacancy-status" class="form-control">
+                                <option value="0" selected disabled>Job Status</option>
+                                <option value="Open">Open</option>
+                                <option value="Filled">Filled</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-close-updatevacancy-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btn-update-vacancy" type="button" class="btn btn-primary"><i style="margin-right: 5px;" class="fas fa-pencil-alt"></i>Update this vacancy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewData["create_job_immediate"] != null && (bool)ViewData["create_job_immediate"])
+{
+    <script>
+        $(document).ready(function () {
+            $("#create-vacancy-modal").modal("show");
+        });
+    </script>
+}

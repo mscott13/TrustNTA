@@ -325,6 +325,7 @@
     <Content Include="Content\Images\job_offers.png" />
     <Content Include="Content\Images\job_resume.jpg" />
     <Content Include="Content\Images\job_resume_2.jpg" />
+    <Content Include="Content\Images\placeholder-logo.png" />
     <Content Include="Content\Images\supervised_user_circle.svg" />
     <Content Include="Content\mdboot\css\addons\datatables-select.min.css" />
     <Content Include="Content\mdboot\css\addons\datatables.min.css" />
@@ -532,6 +533,7 @@
     <Content Include="Scripts\autocomplete.js" />
     <Content Include="Scripts\jquery.marcopolo.min.js" />
     <Content Include="Scripts\predictive.js" />
+    <Content Include="Scripts\site.js" />
     <Content Include="Scripts\test.js" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-regular-400.svg" />
@@ -602,6 +604,7 @@
     <Content Include="Content\mdboot\scss\mdb-lite-free.scss" />
     <Content Include="Content\mdboot\scss\_custom-styles.scss" />
     <Content Include="Content\mdboot\scss\_custom-variables.scss" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -712,7 +715,6 @@
     <Content Include="Views\Graduate\About.cshtml" />
     <Content Include="Views\Graduate\Contact.cshtml" />
     <Content Include="Views\Graduate\Dashboard.cshtml" />
-    <Content Include="Views\Graduate\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_TrustNTA_Employer_Layout.cshtml" />
@@ -762,6 +764,7 @@
     <Compile Include="Models\SeekerJobTypeInterested.cs" />
     <Compile Include="Models\SeekerLocationsAvailability.cs" />
     <Compile Include="Models\SeekerSearch.cs" />
+    <Compile Include="Models\VacancyFilterData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalR-Hubs\ChatHub.cs" />
     <Compile Include="Startup.cs" />
@@ -772,6 +775,7 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
+    <Content Include="Views\Graduate\JobManagement.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

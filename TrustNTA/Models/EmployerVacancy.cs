@@ -8,6 +8,7 @@ namespace TrustNTA.Models
 {
     public class EmployerVacancy
     {
+        public int index { get; set; }
         public string companyLogoUrl { get; set; }
         public string userId { get; set; }
         public string employerVacancyId { get; set; }

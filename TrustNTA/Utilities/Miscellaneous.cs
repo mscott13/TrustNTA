@@ -21,23 +21,29 @@ namespace TrustNTA.Utilities
 
         public static string GenerateVacancyId() 
         {
-            return Database.GetVacancyCount().ToString() + "empl_" + Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 9); ;
+            return Database.GetVacancyCount().ToString() + "empl_" + Guid.NewGuid().ToString().Substring(0, 9); ;
         }
 
         public static string GenerateSeekerJobId()
         {
-            return Database.GetSeekerJobCount().ToString() + "seek_" + Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 9); ;
+            return Database.GetSeekerJobCount().ToString() + "seek_" + Guid.NewGuid().ToString().Substring(0, 9); ;
         }
 
         public static string GenerateJobPoolId()
         {
-            return Database.GetSeekerJobCount().ToString() + "job_" + Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 4); ;
+            return Database.GetSeekerJobCount().ToString() + "job_" + Guid.NewGuid().ToString().Substring(0, 4); ;
         }
 
         public static string GenerateCompanyId()
         {
-            return Database.GetCompanyCount().ToString() + "_" + Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 6); ;
+            return Database.GetCompanyCount().ToString() + "_" + Guid.NewGuid().ToString().Substring(0, 6); ;
         }
+
+        public static string GenerateResumePrefix()
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmssffff") + "-" + Guid.NewGuid().ToString().Substring(0, 8);
+        }
+
 
         public static string GenerateUserID() 
         {

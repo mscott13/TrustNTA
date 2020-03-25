@@ -1,0 +1,280 @@
+﻿@model TrustNTA.Models.SeekerDashboardData
+
+@{
+    Layout = "~/Views/Shared/_TrustNTA_Seeker_Layout.cshtml";
+}
+
+
+
+<h4><i style="margin-right: 10px;" class="fas fa-cogs"></i>Job Preferences</h4>
+<p style="font-size: 15px;">Indicate the job types you are interested in and where you are available to work.</p>
+<div class="row">
+    <div class="col-sm col-padding-lr-adjust">
+        <div class="card">
+            <div class="card-body" style="padding: 0px;">
+                <div class="card-header-container">
+                    <h5 class="card-title job-info-header-override">Jobs Interested</h5>
+                    <h6 class="card-subtitle mb-2 text-muted" style="font-size:13px; font-weight:400; color: #383838 !important;">Add the job types you are interested in...</h6>
+                </div>
+                <form style="margin-right: 10px; margin-left: 10px;">
+                    <div class="form-row">
+                        <div style="margin-bottom:0px" class="form-group col-md-9">
+                            <select id="job-prefs-selector" class="form-control form-control-sm">
+                                <option selected disabled>Select Job Type</option>
+                                @if (Model != null && Model.jobTypes != null)
+                                {
+                                    foreach (TrustNTA.Models.Job job in Model.jobTypes)
+                                    {
+                                        <option value="@job.jobId">@job.title</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div style="margin-bottom:0px" class="form-group col-md-3">
+                            <button id="btn-add-job-prefs" type="button" class="btn btn-primary btn-block  btn-sm"><i style="margin-right: 5px;" class="far fa-building"></i>Add Job</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="job-info-container">
+                    <div class="filter-object">
+                        <p id="jtypes-container" class="filter-title">
+                            Job types selected:
+                            @if (Model != null && Model.jobTypesInterested != null)
+                            {
+                                foreach (TrustNTA.Models.SeekerJobTypeInterested interested in Model.jobTypesInterested)
+                                {
+                                    <span class="badge badge-light badge-sz-adjust remove-jobtype-pref" data-jobtype="@interested.jobId">@interested.jobName<i class="fas fa-times" style="margin-left: 5px;"></i></span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="badge badge-light badge-sz-adjust">No job types selected</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm col-padding-lr-adjust">
+        <div class="card">
+            <div class="card-body" style="padding: 0px;">
+                <div class="card-header-container">
+                    <h5 class="card-title job-info-header-override">Locations available</h5>
+                    <h6 class="card-subtitle mb-2 text-muted" style="font-size:13px; font-weight:400; color: #383838 !important;">Select the locations where you are available to work...</h6>
+                </div>
+                <form style="margin-right: 10px; margin-left: 10px;">
+                    <div class="form-row">
+                        <div style="margin-bottom:0px" class="form-group col-md-9">
+                            <select id="inputState" class="form-control form-control-sm">
+                                <option selected disabled>Select a location</option>
+                                @if (Model != null && Model.jobLocations != null)
+                                {
+                                    foreach (TrustNTA.Models.JobLocation location in Model.jobLocations)
+                                    {
+                                        <option value="@location.locationId">@location.locationName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div style="margin-bottom:0px" class="form-group col-md-3">
+                            <button type="button" class="btn btn-primary btn-block  btn-sm" id="btn-add-loc-avail"><i style="margin-right: 5px;" class="far fa-address-card"></i>Add Location</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="job-info-container">
+                    <div class="filter-object">
+                        <p id="loc-prefs-container" class="filter-title">
+                            Job locations selected:
+                            @if (Model != null && Model.locationsAvailability != null)
+                            {
+                                foreach (TrustNTA.Models.SeekerLocationsAvailability location in Model.locationsAvailability)
+                                {
+                                    <span class="badge badge-light badge-sz-adjust remove-location-avail" data-locationid="@location.locationId">@location.locationName<i class="fas fa-times" style="margin-left: 5px;"></i></span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="badge badge-light badge-sz-adjust">No location selected</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-top: 15px;" class="row">
+    <div class="col-sm-8">
+        <h4><i style="margin-right: 10px; margin-top: 15px;" class="fas fa-cogs"></i>Created Jobs</h4>
+        <p style="font-size: 15px;">View, update and create jobs you are interested in.</p>
+
+    </div>
+    <div class="col-sm-4">
+        <div class="create-btn-container">
+            <button type="button" id="btn-show-create-modal" class="btn btn-outline-success btn-sm"><i style="margin-right: 5px;" class="fas fa-file-alt"></i>Create Job Post</button>
+        </div>
+    </div>
+</div>
+<hr  style="margin-top: 4px;"/>
+
+<table id="seeker-jobs-listing" class="display">
+    <thead>
+        <tr>
+            <td>Date Created</td>
+            <td>Job Type</td>
+            <td>Locations</td>
+            <td>Resume</td>
+            <td>Status</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.jobsCreated != null)
+        {
+            foreach (TrustNTA.Models.SeekerJobCreated job in Model.jobsCreated) 
+            {
+        <tr>
+            <td>@job.dateCreated.ToString("dd MMMM, yyyy")</td>
+            <td>@job.jobTypeName</td>
+            <td>@job.formattedLocations</td>
+            <td><a href="/uploads/@job.resume"><i style="margin-right: 5px;" class="fas fa-file-download"></i>@job.resume</a></td>
+            <td>@job.jobStatusDesc</td>
+            <td><i class="fas fa-edit btn-edit" data-jobId="@job.seekerJobId"></i></td>
+            <td><i class="fas fa-trash-alt btn-delete" data-jobId="@job.seekerJobId"></i></td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div id="create-job-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i style="margin-right:5px;" class="fas fa-briefcase"></i>Create a job post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="inputEmail4">Job Type</label>
+                        <select id="job-type-selector" class="form-control">
+                            <option selected disabled value="0">Job Type</option>
+                            @if (Model != null && Model.jobTypes != null)
+                            {
+                                foreach (TrustNTA.Models.Job job in Model.jobTypes)
+                                {
+                                    <option value="@job.jobId">@job.title</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Locations</label>
+                        <select id="locations-selector" class="form-control" multiple>
+                            <option selected disabled value="0">Job Locations</option>
+                            @if (Model != null && Model.jobLocations != null)
+                            {
+                                foreach (TrustNTA.Models.JobLocation location in Model.jobLocations)
+                                {
+                                    <option value="@location.locationId">@location.locationName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Upload Resume (Optional)</label>
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="uploadFileInput" aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" id="fileNamesLabel" style="overflow:hidden" for="uploadFileInput">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Job Status</label>
+                        <select id="job-status-selector" class="form-control">
+                            <option selected disabled value="0">Select Job Status</option>
+                            <option value="true">Seeking</option>
+                            <option value="false">Not Seeking</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-close-updatevacancy-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btn-post-job" type="button" class="btn btn-primary"><i style="margin-right: 5px;" class="fas fa-pencil-alt"></i>Post Job</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="update-job-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i style="margin-right:5px;" class="fas fa-briefcase"></i>Update job post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="inputEmail4">Job Type</label>
+                        <select id="update-job-type-selector" class="form-control">
+                            <option selected disabled value="0">Job Type</option>
+                            @if (Model != null && Model.jobTypes != null)
+                            {
+                                foreach (TrustNTA.Models.Job job in Model.jobTypes)
+                                {
+                                    <option value="@job.jobId">@job.title</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Locations</label>
+                        <select id="update-locations-selector" class="form-control" multiple>
+                            <option selected disabled value="0">Job Locations</option>
+                            @if (Model != null && Model.jobLocations != null)
+                            {
+                                foreach (TrustNTA.Models.JobLocation location in Model.jobLocations)
+                                {
+                                    <option value="@location.locationId">@location.locationName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Upload Resume (Optional)</label>
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="update-uploadFileInput" aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" id="update-fileNamesLabel" style="overflow:hidden" for="uploadFileInput">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">Job Status</label>
+                        <select id="update-job-status-selector" class="form-control">
+                            <option selected disabled value="0">Select Job Status</option>
+                            <option selected value="true">Seeking</option>
+                            <option selected value="false">Not Seeking</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-close-updatevacancy-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btn-update-post" type="button" class="btn btn-primary"><i style="margin-right: 5px;" class="fas fa-pencil-alt"></i>Update Job Post</button>
+            </div>
+        </div>
+    </div>
+</div>

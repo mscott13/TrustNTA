@@ -11,7 +11,6 @@ namespace TrustNTA.Controllers
 {
     public class EmployerController : Controller
     {
-        // GET: Employer
         public ActionResult Index()
         {
             List<Seeker> seekers = Database.GetAllSeekers(150);

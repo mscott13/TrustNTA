@@ -12,7 +12,7 @@ namespace TrustNTA.Data_Access
 {
     public static class Database
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
+        private static string connectionString = ConfigurationManager.ConnectionStrings["DBConnection_Local"].ConnectionString;
 
         //TABLE NAMES
         private const string TBL_COMPANIES = "Companies";
@@ -35,6 +35,8 @@ namespace TrustNTA.Data_Access
         public const string VACANCY_STATUS_CLOSED = "Closed";
         public const string EMPLOYER_ACCOUNT_INDIVIDUAL = "INDIVIDUAL";
         public const string EMPLOYER_ACCOUNT_COMPANY = "COMPANY";
+        public const string SEEKER_STATUS_SEEKING = "Seeking";
+        public const string SEEKER_STATUS_NOT_SEEKING = "Not Seeking";
 
         public static EmployerVacancy GetEmployerVacancy(string jobId)
         {
@@ -70,6 +72,70 @@ namespace TrustNTA.Data_Access
                             return null;
                         }
                     }
+                }
+            }
+        }
+
+        public static void RemoveSeekerAvailableLocation(string locationId, string userId) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "Delete from Seeker_LocationAvailability where locationId=@locationId and userId=@userId";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    command.Parameters.AddWithValue("@locationId", locationId);
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void RemoveSeekerJobInterest(string jobId, string userId) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "Delete from Seeker_InterestedJobTypes where jobId=@jobId and userId=@userId";
+
+                using(SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    command.Parameters.AddWithValue("@jobId", jobId);
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void AddSeekerJobInterest(string jobId, string userId) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "Insert into Seeker_InterestedJobTypes (jobId, userId) values (@jobId, @userId)";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    command.Parameters.AddWithValue("@jobId", jobId);
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void AddSeekerLocationAvailability(string locationId, string userId) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "Insert into Seeker_LocationAvailability (locationId, userId) values (@locationId, @userId)";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    command.Parameters.AddWithValue("@locationId", locationId);
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.ExecuteNonQuery();
                 }
             }
         }
@@ -204,19 +270,6 @@ namespace TrustNTA.Data_Access
             }
         }
 
-        public static SeekerDashboardData GetSeekerDashboardData(string userId)
-        {
-            SeekerDashboardData dashboardData = new SeekerDashboardData
-            {
-                companies = GetCompanies(),
-                jobLocations = GetJobLocations(),
-                jobTypes = GetJobTypes(),
-                vacanciesLimited = GetAllEmployerVacanciesRange(0, 8, "", "", "", "", "", DateTime.MinValue, DateTime.MinValue),
-                specificVacancies = GetSpecificVacanciesForSeeker(userId)
-            };
-            return dashboardData;
-        }
-
         public static List<EmployerVacancy> GetSpecificVacanciesForSeeker(string userId)
         {
 
@@ -261,7 +314,7 @@ namespace TrustNTA.Data_Access
                         }
                     }
 
-                    if (jobTypeSuitable)
+                    if (jobTypeSuitable && locSuitable)
                     {
                         matchedVacancies.Add(vacancy);
                     }
@@ -321,7 +374,7 @@ namespace TrustNTA.Data_Access
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmd = "select * from Employer_JobCreated where visibility=1 order by dateCreated desc offset " + offset + " rows fetch next " + limit + " rows only";
+                string cmd = "select * from Employer_JobCreated where visibility=1";
 
                 using (SqlCommand command = new SqlCommand(cmd, connection))
                 {
@@ -349,15 +402,15 @@ namespace TrustNTA.Data_Access
                                 vacancies.Add(vacancy);
                             }
 
-                            if (filter_Location != null && filter_Location != "") 
+                            if (filter_Location != null && filter_Location != "")
                             {
                                 filteredVacancies = FilterVacancyByLocation(vacancies, filter_Location);
                             }
-                            if (filter_Company != null && filter_Company != "") 
+                            if (filter_Company != null && filter_Company != "")
                             {
                                 filteredVacancies = FilterVacancyByCompany(filteredVacancies, filter_Company);
                             }
-                            if (filter_JobType != null && filter_JobType != "") 
+                            if (filter_JobType != null && filter_JobType != "")
                             {
                                 filteredVacancies = FilterVacancyByJobType(filteredVacancies, filter_JobType);
                             }
@@ -383,6 +436,80 @@ namespace TrustNTA.Data_Access
                         else
                         {
                             return new List<EmployerVacancy>();
+                        }
+                    }
+                }
+            }
+        }
+
+        public static VacancyFilterData GetVacancyFilterData(int offset, int limit, string filter_Location, string filter_Company, string filter_JobType, string filter_JobTitle, string filter_VacancyStatus, DateTime filter_StartDate, DateTime filter_EndDate)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmd = "select * from Employer_JobCreated where visibility=1";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<EmployerVacancy> vacancies = new List<EmployerVacancy>();
+                        List<EmployerVacancy> filteredVacancies = new List<EmployerVacancy>();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                EmployerVacancy vacancy = new EmployerVacancy
+                                {
+                                    userId = reader["userId"].ToString(),
+                                    employerVacancyId = reader["employerJobId"].ToString(),
+                                    jobType = GetJobTypeName(reader["jobType"].ToString()),
+                                    jobTitle = reader["jobTitle"].ToString(),
+                                    startDate = Convert.ToDateTime(reader["startDate"]),
+                                    endDate = Convert.ToDateTime(reader["endDate"]),
+                                    vacancyStatus = reader["vacancyStatus"].ToString(),
+                                    locations = GetAvailLocations(reader["employerJobId"].ToString()),
+                                    employer = GetEmployerViaUID(reader["userId"].ToString())
+                                };
+                                vacancies.Add(vacancy);
+                            }
+                            filteredVacancies = vacancies;
+
+                            if (filter_Location != null && filter_Location != "")
+                            {
+                                filteredVacancies = FilterVacancyByLocation(vacancies, filter_Location);
+                            }
+                            if (filter_Company != null && filter_Company != "")
+                            {
+                                filteredVacancies = FilterVacancyByCompany(filteredVacancies, filter_Company);
+                            }
+                            if (filter_JobType != null && filter_JobType != "")
+                            {
+                                filteredVacancies = FilterVacancyByJobType(filteredVacancies, filter_JobType);
+                            }
+                            if (filter_JobTitle != null && filter_JobTitle != "")
+                            {
+                                filteredVacancies = FilterVacancyByJobTitle(filteredVacancies, filter_JobTitle);
+                            }
+                            if (filter_VacancyStatus != null && filter_VacancyStatus != "")
+                            {
+                                filteredVacancies = FilterVacancyByVacancyStatus(filteredVacancies, filter_VacancyStatus);
+                            }
+                            if (filter_StartDate != DateTime.MinValue)
+                            {
+                                filteredVacancies = FilterVacancyByStartDate(filteredVacancies, filter_StartDate);
+                            }
+                            if (filter_EndDate != DateTime.MinValue)
+                            {
+                                filteredVacancies = FilterVacancyByEndDate(filteredVacancies, filter_EndDate);
+                            }
+
+                            return new VacancyFilterData(filteredVacancies, offset, limit);
+                        }
+                        else
+                        {
+                            return null;
                         }
                     }
                 }
@@ -1681,22 +1808,212 @@ namespace TrustNTA.Data_Access
             }
         }
 
-        public static void CreateSeekerJob(SeekerJobCreated seekerJob)
+        public static void UpdateSeekerJobVisibility(string jobId, bool visibility) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            {
+                connection.Open();
+                string cmd = "Update Seeker_JobCreated set visibility=@visibility where seekerJobId=@jobId";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection)) 
+                {
+                    command.Parameters.AddWithValue("@visibility", visibility);
+                    command.Parameters.AddWithValue("@jobId", jobId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static SeekerJobCreated UpdateSeekerJob(SeekerJobCreated job)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmd = "Insert into Seeker_JobCreated (userId, dateCreated, jobType, seekerJobId, isSeeking, jobName)";
+                string cmd1 = "Update Seeker_JobCreated set jobType=@jobType, isSeeking=@isSeeking where seekerJobId=@seekerJobId";
+                string cmd2 = "Delete from Job_LocationAvailability where jobId=@jobId";
+                string cmd3 = "Insert into Job_LocationAvailability (jobId, locationId, date) values (@jobId, @locationId, @date)";
+
+                using (SqlCommand command1 = new SqlCommand(cmd1, connection))
+                {
+                    command1.Parameters.AddWithValue("@jobType", job.jobType);
+                    command1.Parameters.AddWithValue("@isSeeking", job.isSeeking);
+                    command1.Parameters.AddWithValue("@seekerJobId", job.seekerJobId);
+                    command1.ExecuteNonQuery();
+
+                    if (job.resume != null && job.resume != "")
+                    {
+                        UpdateSeekerJobResume(job.resume, job.seekerJobId);
+                    }
+                }
+
+                if (job.locations != null)
+                {
+                    using (SqlCommand command2 = new SqlCommand(cmd2, connection))
+                    {
+                        command2.Parameters.AddWithValue("@jobId", job.seekerJobId);
+                        command2.ExecuteNonQuery();
+                    }
+
+                    foreach (JobLocation location in job.locations)
+                    {
+                        using (SqlCommand command3 = new SqlCommand(cmd3, connection))
+                        {
+                            command3.Parameters.AddWithValue("@jobId", job.seekerJobId);
+                            command3.Parameters.AddWithValue("@locationId", location.locationId);
+                            command3.Parameters.AddWithValue("@date", DateTime.Now);
+                            command3.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                job.dateCreated = DateTime.Now;
+                job.formattedLocations = job.GetFormattedLocations();
+                job.jobTypeName = GetJobTypeName(job.jobType);
+                job.jobStatusDesc = job.GetJobStatusName();
+                job.formattedDate = job.GetFormattedDate();
+                return job;
+            }
+        }
+
+        public static void UpdateSeekerJobResume(string filename, string jobId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmd = "Update Seeker_JobCreated set resume=@resume where seekerJobId=@seekerJobId";
 
                 using (SqlCommand command = new SqlCommand(cmd, connection))
                 {
-                    command.Parameters.AddWithValue("@userId", seekerJob.userId);
-                    command.Parameters.AddWithValue("@dateCreated", DateTime.Now);
-                    command.Parameters.AddWithValue("@jobType", seekerJob.jobType);
-                    command.Parameters.AddWithValue("@seekerJobId", Miscellaneous.GenerateSeekerJobId());
-                    command.Parameters.AddWithValue("@isSeeking", seekerJob.isSeeking);
-                    command.Parameters.AddWithValue("@jobName", seekerJob.jobName);
+                    command.Parameters.AddWithValue("@resume", filename);
+                    command.Parameters.AddWithValue("@seekerJobId", jobId);
                     command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static SeekerJobCreated CreateSeekerJob(SeekerJobCreated seekerJob)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmd1 = "Insert into Seeker_JobCreated (userId, dateCreated, jobType, seekerJobId, isSeeking, resume) values (@userId, @dateCreated, @jobType, @seekerJobId, @isSeeking, @resume)";
+                string cmd2 = "Insert into Job_LocationAvailability (jobId, locationId, date) values (@jobId, @locationId, @date)";
+                string jobId = Miscellaneous.GenerateSeekerJobId();
+
+                using (SqlCommand command1 = new SqlCommand(cmd1, connection))
+                {
+                    command1.Parameters.AddWithValue("@userId", seekerJob.userId);
+                    command1.Parameters.AddWithValue("@dateCreated", DateTime.Now);
+                    command1.Parameters.AddWithValue("@jobType", seekerJob.jobType);
+                    command1.Parameters.AddWithValue("@seekerJobId", jobId);
+                    command1.Parameters.AddWithValue("@isSeeking", seekerJob.isSeeking);
+                    command1.Parameters.AddWithValue("@resume", seekerJob.resume);
+                    command1.ExecuteNonQuery();
+                }
+
+                if (seekerJob.locations != null)
+                {
+                    foreach (JobLocation location in seekerJob.locations)
+                    {
+                        using (SqlCommand command2 = new SqlCommand(cmd2, connection))
+                        {
+                            command2.Parameters.AddWithValue("@jobId", jobId);
+                            command2.Parameters.AddWithValue("@locationId", location.locationId);
+                            command2.Parameters.AddWithValue("@date", DateTime.Now);
+                            command2.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                seekerJob.seekerJobId = jobId;
+                seekerJob.formattedLocations = seekerJob.GetFormattedLocations();
+                seekerJob.jobTypeName = GetJobTypeName(seekerJob.jobType);
+                seekerJob.dateCreated = DateTime.Now;
+                seekerJob.formattedDate = seekerJob.GetFormattedDate();
+                seekerJob.jobStatusDesc = seekerJob.GetJobStatusName();
+                return seekerJob;
+            }
+        }
+
+        public static List<SeekerJobCreated> GetSeekerJobsCreated(string userId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmd = "select * from Seeker_JobCreated where userId=@userId and visibility = 'true'";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection))
+                {
+                    List<SeekerJobCreated> jobsCreated = new List<SeekerJobCreated>();
+                    command.Parameters.AddWithValue("@userId", userId);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                SeekerJobCreated jobCreated = new SeekerJobCreated
+                                {
+                                    seekerJobId = reader["seekerJobId"].ToString(),
+                                    locations = GetLocationsForJob(reader["seekerJobId"].ToString()),
+                                    dateCreated = Convert.ToDateTime(reader["dateCreated"]),
+                                    formattedDate = Convert.ToDateTime(reader["dateCreated"]).ToString("dd MMMM, yyyy"),
+                                    jobType = reader["jobType"].ToString(),
+                                    isSeeking = Convert.ToBoolean(reader["isSeeking"]),
+                                    resume = reader["resume"].ToString(),
+                                    jobTypeName = GetJobTypeName(reader["jobType"].ToString()),
+                                };
+
+                                jobCreated.formattedLocations = jobCreated.GetFormattedLocations();
+                                jobCreated.jobStatusDesc = jobCreated.GetJobStatusName();
+                                jobsCreated.Add(jobCreated);
+                            }
+                            return jobsCreated;
+                        }
+                        else
+                        {
+                            return new List<SeekerJobCreated>();
+                        }
+                    }
+                }
+            }
+        }
+
+        public static SeekerJobCreated GetSeekerJobCreated(string jobId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmd = "select * from Seeker_JobCreated where seekerJobId=@seekerJobId";
+
+                using (SqlCommand command = new SqlCommand(cmd, connection))
+                {
+                    command.Parameters.AddWithValue("@seekerJobId", jobId);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            SeekerJobCreated jobCreated = new SeekerJobCreated
+                            {
+                                locations = GetLocationsForJob(reader["seekerJobId"].ToString()),
+                                dateCreated = Convert.ToDateTime(reader["dateCreated"]),
+                                formattedDate = Convert.ToDateTime(reader["dateCreated"]).ToString("dd MMMM, yyyy"),
+                                jobType = reader["jobType"].ToString(),
+                                isSeeking = Convert.ToBoolean(reader["isSeeking"]),
+                                resume = reader["resume"].ToString(),
+                                jobTypeName = GetJobTypeName(reader["jobType"].ToString()),
+                            };
+
+                            jobCreated.formattedLocations = jobCreated.GetFormattedLocations();
+                            jobCreated.jobStatusDesc = jobCreated.GetJobStatusName();
+                            return jobCreated;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
                 }
             }
         }

@@ -10,7 +10,10 @@ namespace TrustNTA.Models
         public List<Company> companies { get; set; }
         public List<Job> jobTypes { get; set; }
         public List<JobLocation> jobLocations { get; set; }
-        public List<EmployerVacancy> vacanciesLimited { get; set; }
+        public VacancyFilterData vacancyFilterData { get; set; }
         public List<EmployerVacancy> specificVacancies { get; set; }
+        public List<SeekerJobCreated> jobsCreated { get; set; }
+        public List<SeekerJobTypeInterested> jobTypesInterested { get; set; }
+        public List<SeekerLocationsAvailability> locationsAvailability { get; set; }
     }
 }

@@ -45,12 +45,13 @@ html {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
     padding-top: 76px;
 }
 
 .nav-overrides {
     box-shadow: 0px 0px 32px -9px rgba(0,0,0,0.37);
-    background-color: rgba(246, 246, 246, 0.7) !important;
+    /*background-color: rgba(246, 246, 246, 0.7) !important;*/
 }
 
 .welcome-title {
@@ -114,6 +115,21 @@ html {
 }
 
 
+.ds-jinterested-hover {
+    border: 1px solid #4e8797;
+}
+
+.ds-offers-hover {
+    border: 1px solid #dbb63e;
+}
+
+.ds-estatus-hover {
+    border: 1px solid #e05b49;
+}
+
+.ds-cjobs-hover {
+    border: 1px solid #2e4553;
+}
 
 .ds-jinterested-hover:hover {
     background-color: #4e8797;
@@ -122,9 +138,9 @@ html {
     transition: all 0.2s;
 }
 
-.ds-jinterested-hover:hover .stats-counter {
-    color: white;
-}
+    .ds-jinterested-hover:hover .stats-counter {
+        color: white;
+    }
 
 .ds-jinterested-hover:hover .stats-title {
     color: white;
@@ -203,7 +219,6 @@ html {
 .filter-object
 {
     display: inline;
-    border: 1px solid red;
     padding: 3px;
     display: inline-block;
     cursor: pointer;
@@ -211,15 +226,16 @@ html {
 
 .filter-title {
     color: #6a6a6a;
-    font-size: 11px;
+    font-size: 12px;
     display: inline;
+    font-weight: 500;
 }
 
 .badge-sz-adjust
 {
     font-size: 11px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
     font-style: italic;
 }
 
@@ -276,14 +292,12 @@ html {
     {
         width: 100%;
         height: auto;
-        border: 1px solid red;
-        margin-top:5px;
+        margin-top:15px;
     }
 
     .job{
         width: 100%;
         min-height: 340px;
-        border: 1px solid red;
         border-radius: 7px;
         padding: 15px;
         background-color: white;
@@ -299,14 +313,13 @@ html {
 
 .company-img img {
     width: 100%;
-    height: 100px;
+    height: 90px;
     border: 1px solid green;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .company-title {
     flex: 0;
-    border: 1px solid red;
     width: 100%;
     color: #212121;
 }
@@ -332,7 +345,6 @@ html {
 .job-details {
     flex: 0;
     width: 100%;
-    border: 1px solid red;
     color: #5a5a5a;
     font-size: 12px;
 }
@@ -342,7 +354,6 @@ html {
     }
 
 .decision {
-    border: 1px solid red;
     flex: auto;
     display: flex;
     align-items: flex-end;
@@ -644,6 +655,36 @@ html {
         font-size: 7px;
     }
 
+#seeker-jobs-listing tbody tr td:nth-child(4) a {
+    color: #24ade3 !important;
+    cursor: pointer;
+}
+
+    #seeker-jobs-listing tbody tr td:nth-child(4) a:hover {
+        color: #c92f2f !important;
+    }
+
+
+    #seeker-jobs-listing tbody tr td:nth-child(6) i {
+        color: #909090;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+#seeker-jobs-listing tbody tr td:nth-child(7) i {
+    transition: all 0.2s;
+    color: #909090;
+    cursor: pointer;
+}
+
+#seeker-jobs-listing tbody tr td:nth-child(6) i:hover {
+    color: #5386E4;
+}
+
+#seeker-jobs-listing tbody tr td:nth-child(7) i:hover {
+    color: #E71D36;
+}
+
 .search-clear {
     font-size: 15px !important;
     margin-right: 20px !important;
@@ -680,4 +721,43 @@ html {
 #search-filter-modal
 {
     font-size: 13px;
+}
+
+.job-info-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: #f3f3f3;
+    padding: 7px;
+    margin-top: 7px;
+}
+
+.job-info-header-override {
+    font-size: 16px;
+    color: #424242;
+}
+
+.job-info-margin-setting {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+
+.card-header-container
+{
+    padding: 10px;
+}
+
+.create-btn-container
+{
+    width: 100%;
+    height: 100%;
+    display:flex;
+    flex-direction:row;
+    align-content: flex-end;
+    justify-content: flex-end;
+    align-items: center;
 }

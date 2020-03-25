@@ -6,19 +6,23 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Heart Trust NTA - Dashboard</title>
+    <title></title>
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/fontawesome-all.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+    <link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/datatable-customize.css" rel="stylesheet" />
 
     <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     <script src="~/Scripts/jquery.marcopolo.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/graduate.js"></script>
+    <script src="~/Scripts/site.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top nav-overrides">
-        <a class="navbar-brand" href="#"><img src="~/Content/Images/company-logo-square2.png" width="50" /></a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top nav-overrides main-nav">
+        <a class="navbar-brand" href="/graduate/dashboard"><img src="~/Content/Images/company-logo-square2.png" width="50" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -75,10 +79,10 @@
                     </form>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="false"> Dashboard</a>
+                    <a class="nav-link" href="/graduate/dashboard" tabindex="-1" aria-disabled="false"> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="false"> Jobs Created</a>
+                    <a class="nav-link" href="/graduate/jobmanagement" tabindex="-1" aria-disabled="false"> Jobs Created</a>
                 </li>
                 <li class="nav-item">
                     <button style="margin-left:10px;" type="button" class="btn btn-success"><i style="margin-right: 5px; color: white;" class="fas fa-file-alt"></i> New Job Post</button>
@@ -93,7 +97,7 @@
     </nav>
     <div class="welcome">
         <h4 class="welcome-title">Heart Trust/NTA Job Portal</h4>
-        <p class="welcome-message">Duis id arcu faucibus, fermentum purus sit amet, gravida velit. </p>
+        <p class="welcome-message">@ViewBag.Title</p>
     </div>
     <div style="margin-top: 15px;" class="container">
         @RenderBody()
